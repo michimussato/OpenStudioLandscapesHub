@@ -1,12 +1,12 @@
-#networks:
-#  teleport:
-#    name: network_teleport
+networks:
+  teleport:
+    name: network_teleport
 services:
   teleport:
     container_name: teleport
     domainname: farm.evil
     env_file:
-      - ../.env
+#      - ../.env
       - .env
     entrypoint:
       - /usr/bin/dumb-init
@@ -15,22 +15,22 @@ services:
       - -c
       - /etc/teleport/teleport.yaml
     hostname: teleport.farm.evil
-    depends_on:
-      caddy:
-        condition: service_started
+#    depends_on:
+#      caddy:
+#        condition: service_started
     image: public.ecr.aws/gravitational/teleport-distroless-debug:18
-#    network_mode: host
-    networks:
-      - caddy
-#      - teleport
-##    ports:
-##      - 443:443
-##      - 3021:3021
-    restart: "no"
+    network_mode: host
+#    networks:
+#      - caddy
+##      - teleport
+###    ports:
+###      - 443:443
+###      - 3021:3021
+    restart: always
     volumes:
     - ./volumes/yaml:/etc/teleport:rw
-    - ./volumes/data:/var/lib/teleport:rw
-    - ../caddy/ClouDNS/volumes/data:/certs:ro
+#    - ./volumes/data:/var/lib/teleport:rw
+    - ../volumes/certs:/certs:ro
 #    - ./volumes/.acme.sh/openstudiolandscapes.cloud-ip.cc/certs/openstudiolandscapes.cloud-ip.cc_ecc/fullchain.cer:/certs/openstudiolandscapes.cloud-ip.cc_ecc/fullchain.cer:ro
 #    - ./volumes/.acme.sh/openstudiolandscapes.cloud-ip.cc/certs/openstudiolandscapes.cloud-ip.cc_ecc/openstudiolandscapes.cloud-ip.cc.key:/certs/openstudiolandscapes.cloud-ip.cc_ecc/openstudiolandscapes.cloud-ip.cc.key:ro
 #    - ./volumes/.acme.sh/evil-farmer.cloud-ip.cc/certs/evil-farmer.cloud-ip.cc_ecc/fullchain.cer:/certs/evil-farmer.cloud-ip.cc_ecc/fullchain.cer:ro

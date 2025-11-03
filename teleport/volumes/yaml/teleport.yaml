@@ -168,14 +168,14 @@ app_service:
       - fritz-box.openstudiolandscapes.lan
     uri: http://192.168.178.1:80/
     use_any_proxy_public_addr: false
-  - insecure_skip_verify: true  # For self-signed certificates: https://goteleport.com/docs/enroll-resources/application-access/guides/connecting-apps/#skip-tls-certificate-verification
-    name: portainer
-    public_addr: portainer.teleport.openstudiolandscapes.cloud-ip.cc
-    rewrite:
-      redirect:
-      - portainer.openstudiolandscapes.lan
-    uri: https://portainer.farm.evil:9443/
-    use_any_proxy_public_addr: false
+#  - insecure_skip_verify: true  # For self-signed certificates: https://goteleport.com/docs/enroll-resources/application-access/guides/connecting-apps/#skip-tls-certificate-verification
+#    name: portainer
+#    public_addr: portainer.teleport.openstudiolandscapes.cloud-ip.cc
+#    rewrite:
+#      redirect:
+#      - portainer.openstudiolandscapes.lan
+#    uri: https://portainer.farm.evil:9443/
+#    use_any_proxy_public_addr: false
   debug_app: false
   enabled: true
   mcp_demo_server: false
@@ -189,10 +189,10 @@ proxy_service:
     enabled: false
   enabled: true
   https_keypairs:
-  - cert_file: /certs/caddy/certificates/acme-staging-v02.api.letsencrypt.org-directory/wildcard_.teleport.openstudiolandscapes.cloud-ip.cc/wildcard_.teleport.openstudiolandscapes.cloud-ip.cc.crt
-    key_file: /certs/caddy/certificates/acme-staging-v02.api.letsencrypt.org-directory/wildcard_.teleport.openstudiolandscapes.cloud-ip.cc/wildcard_.teleport.openstudiolandscapes.cloud-ip.cc.key
-  - cert_file: /certs/caddy/certificates/acme-staging-v02.api.letsencrypt.org-directory/teleport.openstudiolandscapes.cloud-ip.cc/teleport.openstudiolandscapes.cloud-ip.cc.crt
-    key_file: /certs/caddy/certificates/acme-staging-v02.api.letsencrypt.org-directory/teleport.openstudiolandscapes.cloud-ip.cc/teleport.openstudiolandscapes.cloud-ip.cc.key
+  - cert_file: /certs/openstudiolandscapes.cloud-ip.cc_ecc/fullchain.cer
+    key_file: /certs/openstudiolandscapes.cloud-ip.cc_ecc/openstudiolandscapes.cloud-ip.cc.key
+#  - cert_file: /certs/caddy/certificates/acme-staging-v02.api.letsencrypt.org-directory/teleport.openstudiolandscapes.cloud-ip.cc/teleport.openstudiolandscapes.cloud-ip.cc.crt
+#    key_file: /certs/caddy/certificates/acme-staging-v02.api.letsencrypt.org-directory/teleport.openstudiolandscapes.cloud-ip.cc/teleport.openstudiolandscapes.cloud-ip.cc.key
   https_keypairs_reload_interval: 120s
   listen_addr: 0.0.0.0:3023
   public_addr:
