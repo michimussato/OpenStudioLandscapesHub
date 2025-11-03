@@ -1,0 +1,74 @@
+{
+        # https://caddyserver.com/docs/automatic-https#testing
+        acme_ca https://acme-staging-v02.api.letsencrypt.org/directory
+        admin 0.0.0.0:2019
+        email {env.CLOUDNS_EMAIL}
+}
+
+## Global Configuration
+#{
+#  acme_dns cloudns {
+#    auth_id auth_id "{env.CLOUDNS_AUTH_ID}"
+##    sub_auth_id "<sub_auth_id>"
+#    auth_password "{env.CLOUDNS_AUTH_PASSWORD}"
+#  }
+#}
+
+{env.CLOUDNS_DOMAIN} {
+        # Per-Site Configuration
+        tls {
+                dns cloudns {
+                        auth_id "{env.CLOUDNS_AUTH_ID}"
+#                        sub_auth_id "<sub_auth_id>"
+                        auth_password "{env.CLOUDNS_AUTH_PASSWORD}"
+                }
+                resolvers 8.8.8.8 8.8.4.4
+        }
+
+#        root * /srv/site
+#        file_server
+
+        @teleport host {env.CLOUDNS_DOMAIN}
+        handle @teleport {
+                reverse_proxy https://teleport.farm.evil:443 {
+                        # Portainer uses a self signed certificate
+                        transport http {
+                                tls
+                                tls_insecure_skip_verify
+                        }
+                }
+        }
+}
+
+*.{env.CLOUDNS_DOMAIN} {
+        # Per-Site Configuration
+        tls {
+                dns cloudns {
+                        auth_id "{env.CLOUDNS_AUTH_ID}"
+#                        sub_auth_id "<sub_auth_id>"
+                        auth_password "{env.CLOUDNS_AUTH_PASSWORD}"
+                }
+                resolvers 8.8.8.8 8.8.4.4
+        }
+
+#        root * /srv/site
+#        file_server
+
+#        @caddy host caddy.{env.CLOUDNS_DOMAIN}
+#        handle @caddy {
+#                root * /usr/share/caddy
+#                php_fastcgi localhost:80
+#                file_server
+#        }
+
+        @portainer host caddy-portainer.{env.CLOUDNS_DOMAIN}
+        handle @portainer {
+                reverse_proxy https://portainer.farm.evil:9443 {
+                        # Portainer uses a self signed certificate
+                        transport http {
+                                tls
+                                tls_insecure_skip_verify
+                        }
+                }
+        }
+}
