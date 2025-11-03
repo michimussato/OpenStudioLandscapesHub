@@ -1,0 +1,90 @@
+# Temporary and binary files
+*~
+*.py[cod]
+*.so
+*.cfg
+!.isort.cfg
+!setup.cfg
+*.orig
+*.log
+*.pot
+__pycache__/*
+.cache/*
+.*.swp
+*/.ipynb_checkpoints/*
+.DS_Store
+*.env
+
+# Project files
+.ropeproject
+.project
+.pydevproject
+.settings
+.idea
+.vscode
+tags
+
+# Package files
+*.egg
+*.eggs/
+.installed.cfg
+*.egg-info
+
+# Unittest and coverage
+htmlcov/*
+.coverage
+.coverage.*
+.tox/*/
+.nox/*/
+junit*.xml
+coverage.xml
+.pytest_cache/
+
+# Build and docs folder/files
+build/*
+dist/*
+sdist/*
+docs/api/*
+docs/_rst/*
+docs/_build/*
+cover/*
+MANIFEST
+
+# Per-project virtualenvs
+.venv*/
+.conda*/
+.python-version
+
+# Dagster
+.dagster/*
+!.dagster/.gitkeep
+!.dagster/dagster.yaml
+.dagster-postgres/*
+!.dagster-postgres/.gitkeep
+tmp*/
+
+# Obsidian
+.obsidian/hotkeys.json
+.obsidian/workspace.json
+.obsidian/workspaces.json
+
+# Teleport
+teleport/volumes/data
+!teleport/volumes/.gitkeep
+
+# Jellyfin
+jellyfin/volumes
+!jellyfin/volumes/.gitkeep
+
+# Pi-hole
+pi-hole/volumes/etc/pihole/*
+!pi-hole/volumes/.gitkeep
+
+# Portainer
+portainer/volumes
+!portainer/volumes/.gitkeep
+
+# Transmission
+transmission/volumes/*
+!transmission/volumes/.gitkeep
+!transmission/volumes/settings.json
