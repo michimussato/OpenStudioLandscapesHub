@@ -1,0 +1,38 @@
+networks:
+  caddy:
+    # create this first before running the docker-compose - docker network create caddy
+    name: network_caddy
+
+services:
+  caddy:
+    build:
+      context: ./ClouDNS
+      dockerfile: ClouDNS.Dockerfile
+    container_name: caddy
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      - CLOUDNS_DOMAIN=${CLOUDNS_DOMAIN}
+      - CLOUDNS_AUTH_ID=${CLOUDNS_AUTH_ID}
+      - CLOUDNS_AUTH_PASSWORD=${CLOUDNS_AUTH_PASSWORD}
+      - ACME_AGREE=true
+    ports:
+      - 2019:2019 # remove if you do not want admin API
+      - 80:80
+      - 443:443
+#    expose:
+#      - 2019
+#      - 80
+#      - 443
+    volumes:
+      - ./volumes/config:/config:rw
+      - ./volumes/data:/data:rw
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - ../index.html:/usr/share/caddy/index.html
+    networks:
+      - caddy # add other containers onto this network to use dns name
+
+#volumes:
+#  caddy-config:
+#  caddy-data:# external: true

@@ -1,0 +1,20 @@
+include:
+  - path: caddy/ClouDNS/ClouDNS.docker-compose.yml
+    project_directory: ./caddy/ClouDNS
+#  - path: jellyfin/docker-compose.yml
+#    project_directory: /home/user/git/repos/server/jellyfin
+#  - path: pi-hole/docker-compose.yml
+#    project_directory: /home/user/git/repos/server/pi-hole
+#  - path: filebrowser/docker-compose.yml
+#    project_directory: /home/user/git/repos/server/filebrowser
+  - path: teleport/docker-compose.yml
+    project_directory: ./teleport
+#  - path: portainer/docker-compose.yml
+#    project_directory: ./portainer
+#  - path: volumio/docker-compose.yml
+#    project_directory: /home/user/git/repos/server/volumio
+#  - path:
+#    - jellyfin/docker-compose.yml
+#    - pi-hole/docker-compose.yml
+#    - transmission/docker-compose.yml
+#    - filebrowser/docker-compose.yml
