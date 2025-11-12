@@ -12,10 +12,6 @@ services:
     hostname: openstudiolandscapes-hub-registry
     restart: always
     image: docker.io/registry:3
-    depends_on:
-      traefik:
-        condition: "service_started"
-        required: false
     volumes:
       - ../.volumes/registry/data:/var/lib/registry:rw
       - ../.volumes/registry/certs:/certs:ro
@@ -27,7 +23,12 @@ services:
       REGISTRY_AUTH_HTPASSWD_REALM: "Registry Realm"
       REGISTRY_AUTH_HTPASSWD_PATH: /auth/htpasswd
     networks:
-      - registry
+      - openstudiolandscapes_hub
+#      - openstudiolandscapes_hub_traefik
+#    depends_on:
+#      service_openstudiolandscapes_hub_traefik:
+#        condition: "service_started"
+#        required: true
 #      This may be enabled once I figured out how to route encrypted
 #      traffic from a client via Traefik to registry
 #      - traefik_frontend

@@ -3,7 +3,7 @@
 # https://github.com/ChristianLempa/boilerplates/blob/backup/boilerplates-v1/docker-compose/teleport/compose.yaml
 
 services:
-  openstudiolandscapeshub-teleport:
+  openstudiolandscapes_hub_teleport:
     container_name: openstudiolandscapes-hub-teleport
     hostname: openstudiolandscapes-hub-teleport
 #    domainname: openstudiolandscapes.lan
@@ -16,12 +16,12 @@ services:
     - /etc/teleport/teleport.yaml
     image: public.ecr.aws/gravitational/teleport-distroless-debug:18
     networks:
-      - openstudiolandscapes_hub
-      - openstudiolandscapes_hub_traefik
-    depends_on:
-      service_openstudiolandscapes_hub_traefik:
-        condition: "service_started"
-        required: true
+      - network_openstudiolandscapes_hub
+#      - network_openstudiolandscapes_hub_traefik
+#    depends_on:
+#      service_openstudiolandscapes_hub_traefik:
+#        condition: "service_started"
+#        required: true
     restart: unless-stopped
     ports:
       - "3080:3080"

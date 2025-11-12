@@ -15,7 +15,7 @@ include:
 #    project_directory: ./registry
   - path: pihole/docker-compose.pihole.yml
     project_directory: ./pihole
-#  - path: teleport/docker-compose.teleport.yml
-#    project_directory: ./teleport
+  - path: teleport/docker-compose.teleport.yml
+    project_directory: ./teleport
   - path: portainer/docker-compose.portainer.yml
     project_directory: ./portainer
