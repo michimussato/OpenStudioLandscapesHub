@@ -1,19 +1,23 @@
 <!-- TOC -->
 * [Pangolin](#pangolin)
+  * [`docker-compose.pangolin.yml`](#docker-composepangolinyml)
+  * [`config.yml`](#configyml)
+  * [Traefik](#traefik)
+    * [Static `traefik_config.yml`](#static-traefik_configyml)
+    * [Dynamic `dynamic_config.yml`](#dynamic-dynamic_configyml)
 <!-- TOC -->
 
 ---
 
 # Pangolin
 
-Git Submodule added with
+Full Self-host Pangolin Documentation is available
+[here](https://docs.pangolin.net/self-host/quick-install)
 
-```shell
-git -C pangolin submodule add https://github.com/fosrl/pangolin.git
-```
+Pangolin volume structure:
 
 ```
-.
+../.volumes/pangolin
 ├── config/
 │   ├── config.yml (*)
 │   ├── db/
@@ -25,7 +29,9 @@ git -C pangolin submodule add https://github.com/fosrl/pangolin.git
 │   └── traefik/
 │       ├── traefik_config.yml (*)
 │       └── dynamic_config.yml (*)
-└── docker-compose.yml (*)
+└── data/
+    ├── certificates/
+    └── dynamic/
 ```
 
 ```shell
@@ -38,7 +44,7 @@ mkdir -p \
     ../.volumes/pangolin/config/logs
 ```
 
-## `docker-compose.yml`
+## `docker-compose.pangolin.yml`
 
 https://docs.pangolin.net/self-host/manual/docker-compose#docker-compose-configuration
 

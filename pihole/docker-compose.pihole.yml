@@ -1,5 +1,3 @@
----
-
 services:
   service_openstudiolandscapes_hub_pihole:
     # https://docs.docker.com/reference/compose-file/services/#shm_size

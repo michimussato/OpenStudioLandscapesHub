@@ -1,5 +1,3 @@
----
-
 networks:
   network_openstudiolandscapes_hub:
     name: network_openstudiolandscapes_hub
