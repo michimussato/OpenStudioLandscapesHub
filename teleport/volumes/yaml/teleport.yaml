@@ -188,11 +188,11 @@ proxy_service:
     email: michimussato@gmail.com
     enabled: false
   enabled: true
-  https_keypairs:
-  - cert_file: /certs/openstudiolandscapes.cloud-ip.cc_ecc/fullchain.cer
-    key_file: /certs/openstudiolandscapes.cloud-ip.cc_ecc/openstudiolandscapes.cloud-ip.cc.key
-#  - cert_file: /certs/caddy/certificates/acme-staging-v02.api.letsencrypt.org-directory/teleport.openstudiolandscapes.cloud-ip.cc/teleport.openstudiolandscapes.cloud-ip.cc.crt
-#    key_file: /certs/caddy/certificates/acme-staging-v02.api.letsencrypt.org-directory/teleport.openstudiolandscapes.cloud-ip.cc/teleport.openstudiolandscapes.cloud-ip.cc.key
+#  https_keypairs:
+#  - cert_file: /certs/openstudiolandscapes.cloud-ip.cc_ecc/fullchain.cer
+#    key_file: /certs/openstudiolandscapes.cloud-ip.cc_ecc/openstudiolandscapes.cloud-ip.cc.key
+##  - cert_file: /certs/caddy/certificates/acme-staging-v02.api.letsencrypt.org-directory/teleport.openstudiolandscapes.cloud-ip.cc/teleport.openstudiolandscapes.cloud-ip.cc.crt
+##    key_file: /certs/caddy/certificates/acme-staging-v02.api.letsencrypt.org-directory/teleport.openstudiolandscapes.cloud-ip.cc/teleport.openstudiolandscapes.cloud-ip.cc.key
   https_keypairs_reload_interval: 120s
   listen_addr: 0.0.0.0:3023
   public_addr:

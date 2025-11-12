@@ -1,3 +1,8 @@
+#networks:
+#  caddy:
+#    # create this first before running the docker-compose - docker network create caddy
+#    name: network_caddy
+
 include:
 #  - path: caddy/ClouDNS/ClouDNS.docker-compose.yml
 #    project_directory: ./caddy/ClouDNS

@@ -1,7 +1,4 @@
-networks:
-  caddy:
-    # create this first before running the docker-compose - docker network create caddy
-    name: network_caddy
+
 
 services:
   caddy:
@@ -9,11 +6,12 @@ services:
       context: ./ClouDNS
       dockerfile: ClouDNS.Dockerfile
     container_name: caddy
+    domainname: openstudiolandscapes.lan
     restart: unless-stopped
     env_file:
       - .env
     environment:
-      - CLOUDNS_DOMAIN=${CLOUDNS_DOMAIN}
+#      - CLOUDNS_DOMAIN=${CLOUDNS_DOMAIN}
       - CLOUDNS_AUTH_ID=${CLOUDNS_AUTH_ID}
       - CLOUDNS_AUTH_PASSWORD=${CLOUDNS_AUTH_PASSWORD}
       - ACME_AGREE=true
@@ -30,6 +28,7 @@ services:
       - ./volumes/data:/data:rw
       - ./Caddyfile:/etc/caddy/Caddyfile
       - ../index.html:/usr/share/caddy/index.html
+#      - ../../volumes/certs:/certs:ro
     networks:
       - caddy # add other containers onto this network to use dns name
 
