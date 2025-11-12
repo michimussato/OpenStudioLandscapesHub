@@ -68,3 +68,9 @@ https://docs.pangolin.net/self-host/manual/docker-compose#traefik-static-configu
 
 https://docs.pangolin.net/self-host/manual/docker-compose#traefik-dynamic-configuration
 
+### DNS
+
+#### Wildcard Domains
+
+https://docs.pangolin.net/self-host/advanced/wild-card-domains
+

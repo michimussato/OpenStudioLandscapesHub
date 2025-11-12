@@ -109,3 +109,5 @@ MANIFEST
 !.volumes/pangolin/data/certificates/.gitkeep
 .volumes/pangolin/data/dynamic/*
 !.volumes/pangolin/data/dynamic/.gitkeep
+
+/.workfiles/
