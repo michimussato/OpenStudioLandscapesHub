@@ -93,3 +93,17 @@ MANIFEST
 !.volumes/registry/auth/.gitkeep
 .volumes/registry/data/*
 !.volumes/registry/data/.gitkeep
+
+# Pangolin
+.volumes/pangolin/config/db/*
+!.volumes/pangolin/config/db/.gitkeep
+.volumes/pangolin/config/letsencrypt/*
+!.volumes/pangolin/config/letsencrypt/.gitkeep
+.volumes/pangolin/config/logs/*
+!.volumes/pangolin/config/logs/.gitkeep
+.volumes/pangolin/config/traefik/*
+!.volumes/pangolin/config/traefik/.gitkeep
+.volumes/pangolin/data/certificates/*
+!.volumes/pangolin/data/certificates/.gitkeep
+.volumes/pangolin/data/dynamic/*
+!.volumes/pangolin/data/dynamic/.gitkeep
