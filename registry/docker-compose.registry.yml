@@ -1,0 +1,42 @@
+networks:
+  #  teleport:
+  #    name: network_teleport
+  #    external: false
+  registry:
+    name: network_registry
+    external: false
+
+services:
+  registry:
+    container_name: registry
+    hostname: registry
+    restart: always
+    image: docker.io/registry:3
+    depends_on:
+      traefik:
+        condition: "service_started"
+        required: false
+    volumes:
+      - ./volumes/data:/var/lib/registry:rw
+      - ./volumes/certs:/certs:ro
+      - ./volumes/auth:/auth:ro
+    environment:
+      REGISTRY_HTTP_TLS_CERTIFICATE: /certs/registry.openstudiolandscapes.lan.crt
+      REGISTRY_HTTP_TLS_KEY: /certs/registry.openstudiolandscapes.lan.key
+      REGISTRY_AUTH: htpasswd
+      REGISTRY_AUTH_HTPASSWD_REALM: "Registry Realm"
+      REGISTRY_AUTH_HTPASSWD_PATH: /auth/htpasswd
+    networks:
+      - registry
+#      This may be enabled once I figured out how to route encrypted
+#      traffic from a client via Traefik to registry
+#      - traefik_frontend
+#    labels:
+#      - "traefik.enable=true"
+#      - "traefik.http.services.registry.loadbalancer.server.port=5000"
+#      - "traefik.http.services.registry.loadbalancer.server.scheme=https"
+#      - "traefik.http.routers.registry.rule=Host(`registry.openstudiolandscapes.lan`)"
+#      - "traefik.http.routers.registry.entrypoints=websecure"
+#      - "traefik.http.routers.registry.tls=true"
+    ports:
+      - "5000:5000"

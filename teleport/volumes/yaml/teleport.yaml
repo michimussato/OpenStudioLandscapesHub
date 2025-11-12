@@ -1,207 +1,32 @@
-app_service:
-  apps:
-#  - insecure_skip_verify: false
-#    name: ayon
-#    public_addr: ayon.teleport.openstudiolandscapes.cloud-ip.cc
-#    rewrite:
-#      redirect:
-#      - ayon.openstudiolandscapes.lan
-#    uri: http://localhost:5005/
-#    use_any_proxy_public_addr: false
-#  - insecure_skip_verify: false
-#    name: dagster
-#    public_addr: dagster.teleport.openstudiolandscapes.cloud-ip.cc
-#    rewrite:
-#      redirect:
-#      - dagster.openstudiolandscapes.lan
-#    uri: http://localhost:3003/
-#    use_any_proxy_public_addr: false
-#  - insecure_skip_verify: false
-#    name: deadline-rcs-runner-10-2
-#    public_addr: deadline-rcs-runner-10-2.teleport.openstudiolandscapes.cloud-ip.cc
-#    rewrite:
-#      redirect:
-#      - deadline-rcs-runner-10-2.openstudiolandscapes.lan
-#    uri: http://localhost:8888/
-#    use_any_proxy_public_addr: false
-#  - insecure_skip_verify: false
-#    name: grafana
-#    public_addr: grafana.teleport.openstudiolandscapes.cloud-ip.cc
-#    rewrite:
-#      redirect:
-#      - grafana.openstudiolandscapes.lan
-#    uri: http://localhost:3030/
-#    use_any_proxy_public_addr: false
-#  - insecure_skip_verify: false
-#    name: kitsu
-#    public_addr: kitsu.teleport.openstudiolandscapes.cloud-ip.cc
-#    rewrite:
-#      redirect:
-#      - kitsu.openstudiolandscapes.lan
-#    uri: http://localhost:4545/
-#    use_any_proxy_public_addr: false
-#  - insecure_skip_verify: false
-#    name: likec4
-#    public_addr: likec4.teleport.openstudiolandscapes.cloud-ip.cc
-#    rewrite:
-#      redirect:
-#      - likec4.openstudiolandscapes.lan
-#    uri: http://localhost:4567/
-#    use_any_proxy_public_addr: false
-#  - insecure_skip_verify: false
-#    name: nuke-rlm-8
-#    public_addr: nuke-rlm-8.teleport.openstudiolandscapes.cloud-ip.cc
-#    rewrite:
-#      redirect:
-#      - nuke-rlm-8.openstudiolandscapes.lan
-#    uri: http://localhost:4101/
-#    use_any_proxy_public_addr: false
-#  - insecure_skip_verify: false
-#    name: opencue-web
-#    public_addr: opencue-web.teleport.openstudiolandscapes.cloud-ip.cc
-#    rewrite:
-#      redirect:
-#      - opencue-web.openstudiolandscapes.lan
-#    uri: http://localhost:1234/
-#    use_any_proxy_public_addr: false
-#  - insecure_skip_verify: false
-#    name: sesi-gcc-9-3-houdini-20
-#    public_addr: sesi-gcc-9-3-houdini-20.teleport.openstudiolandscapes.cloud-ip.cc
-#    rewrite:
-#      redirect:
-#      - sesi-gcc-9-3-houdini-20.openstudiolandscapes.lan
-#    uri: http://localhost:1717/
-#    use_any_proxy_public_addr: false
-#  - insecure_skip_verify: false
-#    name: syncthing
-#    public_addr: syncthing.teleport.openstudiolandscapes.cloud-ip.cc
-#    rewrite:
-#      redirect:
-#      - syncthing.openstudiolandscapes.lan
-#    uri: http://localhost:8787/
-#    use_any_proxy_public_addr: false
-#  - insecure_skip_verify: false
-#    name: twingate
-#    public_addr: twingate.teleport.openstudiolandscapes.cloud-ip.cc
-#    rewrite:
-#      redirect:
-#      - twingate.openstudiolandscapes.lan
-#    uri: http://localhost:80/
-#    use_any_proxy_public_addr: false
-#  - insecure_skip_verify: false
-#    name: watchtower
-#    public_addr: watchtower.teleport.openstudiolandscapes.cloud-ip.cc
-#    rewrite:
-#      redirect:
-#      - watchtower.openstudiolandscapes.lan
-#    uri: http://localhost:4000/
-#    use_any_proxy_public_addr: false
-#  - insecure_skip_verify: false
-#    name: filebrowser
-#    public_addr: filebrowser.teleport.openstudiolandscapes.cloud-ip.cc
-#    rewrite:
-#      redirect:
-#      - filebrowser.openstudiolandscapes.lan
-#    uri: http://localhost:8080/
-#    use_any_proxy_public_addr: false
-  - insecure_skip_verify: false
-    name: openstudiolandscapes-dagster
-    public_addr: openstudiolandscapes-dagster.teleport.openstudiolandscapes.cloud-ip.cc
-    rewrite:
-      redirect:
-      - openstudiolandscapes-dagster.openstudiolandscapes.lan
-    uri: http://openstudiolandscapes-dagster.openstudiolandscapes.lan:3000/
-    use_any_proxy_public_addr: false
-  - insecure_skip_verify: false
-    name: openstudiolandscapes-harbor
-    public_addr: openstudiolandscapes-harbor.teleport.openstudiolandscapes.cloud-ip.cc
-    rewrite:
-      redirect:
-      - openstudiolandscapes-harbor.openstudiolandscapes.lan
-    uri: http://openstudiolandscapes-harbor.openstudiolandscapes.lan:80/
-    use_any_proxy_public_addr: false
-  - insecure_skip_verify: false
-    name: pi-jellyfin
-    public_addr: pi-jellyfin.teleport.openstudiolandscapes.cloud-ip.cc
-    rewrite:
-      redirect:
-      - pi-jellyfin.openstudiolandscapes.lan
-    uri: http://pi-jellyfin.openstudiolandscapes.lan:8096/
-    use_any_proxy_public_addr: false
-  - insecure_skip_verify: false
-    name: pi-filebrowser
-    public_addr: pi-filebrowser.teleport.openstudiolandscapes.cloud-ip.cc
-    rewrite:
-      redirect:
-      - pi-filebrowser.openstudiolandscapes.lan
-    uri: http://pi-filebrowser.openstudiolandscapes.lan:8080/
-    use_any_proxy_public_addr: false
-  - insecure_skip_verify: false
-    name: pi-moode
-    public_addr: pi-moode.teleport.openstudiolandscapes.cloud-ip.cc
-    rewrite:
-      redirect:
-      - pi-moode.openstudiolandscapes.lan
-    uri: http://moode.farm.evil:80/
-    use_any_proxy_public_addr: false
-  - insecure_skip_verify: false
-    name: pi-hole
-    public_addr: pi-hole.teleport.openstudiolandscapes.cloud-ip.cc
-    rewrite:
-      redirect:
-      - pi-hole.openstudiolandscapes.lan
-    uri: http://pi-hole.farm.evil:88/admin/
-    use_any_proxy_public_addr: false
-  - insecure_skip_verify: false
-    name: pi-transmission
-    public_addr: pi-transmission.teleport.openstudiolandscapes.cloud-ip.cc
-    rewrite:
-      redirect:
-      - pi-transmission.openstudiolandscapes.lan
-    uri: http://transmission.farm.evil:9091/admin/
-    use_any_proxy_public_addr: false
-  - insecure_skip_verify: false
-    name: fritz-box
-    public_addr: fritz-box.teleport.openstudiolandscapes.cloud-ip.cc
-    rewrite:
-      redirect:
-      - fritz-box.openstudiolandscapes.lan
-    uri: http://192.168.178.1:80/
-    use_any_proxy_public_addr: false
-#  - insecure_skip_verify: true  # For self-signed certificates: https://goteleport.com/docs/enroll-resources/application-access/guides/connecting-apps/#skip-tls-certificate-verification
-#    name: portainer
-#    public_addr: portainer.teleport.openstudiolandscapes.cloud-ip.cc
-#    rewrite:
-#      redirect:
-#      - portainer.openstudiolandscapes.lan
-#    uri: https://portainer.farm.evil:9443/
-#    use_any_proxy_public_addr: false
-  debug_app: false
-  enabled: true
-  mcp_demo_server: false
+# https://github.com/ChristianLempa/boilerplates/blob/backup/boilerplates-v1/docker-compose/teleport/config/teleport.yaml
+
+# Teleport Config Reference:
+# https://goteleport.com/docs/reference/deployment/config/
+
+version: v3
+
 auth_service:
   enabled: 'yes'
   listen_addr: 0.0.0.0:3025
   proxy_listener_mode: multiplex
+  cluster_name: "teleport.example.com"  # <-- Set cluster_name
+
 proxy_service:
   acme:
-    email: michimussato@gmail.com
     enabled: false
   enabled: true
-#  https_keypairs:
-#  - cert_file: /certs/openstudiolandscapes.cloud-ip.cc_ecc/fullchain.cer
-#    key_file: /certs/openstudiolandscapes.cloud-ip.cc_ecc/openstudiolandscapes.cloud-ip.cc.key
-##  - cert_file: /certs/caddy/certificates/acme-staging-v02.api.letsencrypt.org-directory/teleport.openstudiolandscapes.cloud-ip.cc/teleport.openstudiolandscapes.cloud-ip.cc.crt
-##    key_file: /certs/caddy/certificates/acme-staging-v02.api.letsencrypt.org-directory/teleport.openstudiolandscapes.cloud-ip.cc/teleport.openstudiolandscapes.cloud-ip.cc.key
+  https_keypairs: []
   https_keypairs_reload_interval: 120s
   listen_addr: 0.0.0.0:3023
   public_addr:
-  - teleport.openstudiolandscapes.cloud-ip.cc:443
-  - teleport.openstudiolandscapes.lan:443
-  tunnel_listen_addr: 0.0.0.0:3024
-  web_listen_addr: 0.0.0.0:443
+  - teleport.example.com:443  # <-- Set public_addr
+#  - teleport.example.lan:443
+#  tunnel_listen_addr: 0.0.0.0:3024
+  web_listen_addr: 0.0.0.0:3080
+
 ssh_service:
   enabled: false
+
 teleport:
   ca_pin: ''
   data_dir: /var/lib/teleport
@@ -214,5 +39,42 @@ teleport:
       output: text
     output: stderr
     severity: INFO
-  nodename: teleport.openstudiolandscapes.cloud-ip.cc
-version: v3
+  nodename: teleport.example.com  # <-- Set nodename
+
+app_service:
+  apps:
+  - description: 'Kitsu Production Tracking'
+    insecure_skip_verify: false
+    name: kitsu
+    public_addr: kitsu.teleport.example.com  # <-- Set public_addr
+    rewrite:
+      redirect: []
+    uri: http://kitsu.example.lan:4545  # <-- Set uri
+    use_any_proxy_public_addr: false
+  - description: 'OpenStudioLandscapesHub-Dagster'
+    insecure_skip_verify: false
+    name: openstudiolandscapes-dagster
+    public_addr: openstudiolandscapes-dagster.teleport.example.com  # <-- Set public_addr
+    rewrite:
+      redirect: []
+    uri: http://openstudiolandscapes-dagster.example.lan:3000/  # <-- Set uri
+    use_any_proxy_public_addr: false
+  - description: 'OpenStudioLandscapesHub-Pihole'
+    insecure_skip_verify: false
+    name: pihole
+    public_addr: pihole.teleport.example.com  # <-- Set public_addr
+    rewrite:
+      redirect: []
+    uri: http://pihole.example.lan/admin/  # <-- Set uri
+    use_any_proxy_public_addr: false
+  - description: 'OpenStudioLandscapesHub-Portainer'
+    insecure_skip_verify: true  # For self-signed certificates: https://goteleport.com/docs/enroll-resources/application-access/guides/connecting-apps/#skip-tls-certificate-verification
+    name: portainer
+    public_addr: portainer.teleport.example.com  # <-- Set public_addr
+    rewrite:
+      redirect: []
+    uri: https://portainer.example.lan/  # <-- Set uri
+    use_any_proxy_public_addr: false
+  debug_app: false
+  enabled: true
+  mcp_demo_server: false

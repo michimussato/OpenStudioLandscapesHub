@@ -1,0 +1,52 @@
+#networks:
+#  pi-hole:
+#    name: network_pi-hole
+services:
+  pihole-unbound:
+    # https://docs.docker.com/reference/compose-file/services/#shm_size
+    # docker exec -it pihole-unbound df /dev/shm
+    # Note: docker compose restart won't reflect
+    # changes in shm_size
+    # requires down -> up
+    shm_size: 1gb
+    cap_add: []
+    container_name: pihole-unbound
+    domainname: farm.evil
+    env_file:
+      - .env
+    environment:
+      FTLCONF_dns_dnssec: 'true'
+      FTLCONF_dns_listeningMode: all
+      FTLCONF_dns_upstreams: 127.0.0.1#5335
+      FTLCONF_webserver_api_password: myp4ssword
+      FTLCONF_webserver_interface_theme: default-light
+      FTLCONF_dns_revServers: ${REV_SERVER:-false},${REV_SERVER_CIDR},${REV_SERVER_TARGET},${REV_SERVER_DOMAIN}
+      FTLCONF_webserver_port: 80
+      TZ: Europe/Zurich
+    hostname: pihole-unbound.farm.evil
+    image: docker.io/mpgirro/pihole-unbound:latest
+    networks:
+      - network_openstudiolandscapes_hub_traefik
+#    labels:
+#      - "traefik.enable=true"
+#      # Redirect HTTPS to HTTP
+#      - "traefik.http.routers.pihole-https.entrypoints=websecure"
+#      - "traefik.http.routers.pihole-https.rule=Host(`pihole.openstudiolandscapes.lan`)"
+#      - "traefik.http.routers.pihole-https.middlewares=redirect-https-to-http"
+#      - "traefik.http.routers.pihole-http.entrypoints=web"
+#      - "traefik.http.routers.pihole-http.rule=Host(`pihole.openstudiolandscapes.lan`)"
+#      - "traefik.http.routers.pihole-http.middlewares=redirect-https-to-http"
+#      - "traefik.http.services.pihole.loadbalancer.server.port=80"
+#      - "traefik.http.services.pihole.loadbalancer.server.scheme=http"
+#      - "traefik.http.middlewares.redirect-https-to-http.redirectscheme.scheme=http"
+#      - "traefik.http.middlewares.redirect-https-to-http.redirectscheme.permanent=true"
+    ports:
+    - "53:53/tcp"
+    - "53:53/udp"
+    - "88:80/tcp"
+#    - 444:443/tcp
+    restart: unless-stopped
+    volumes:
+    - ../.volumes/pihole/etc/pihole:/etc/pihole:rw
+    - ../.volumes/pihole/etc/dnsmasq.d:/etc/dnsmasq.d:rw
+    - ../.volumes/pihole/etc/unbound/unbound.conf.d:/etc/unbound/unbound.conf.d:rw

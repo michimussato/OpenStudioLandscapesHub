@@ -1,0 +1,49 @@
+---
+# docker compose up --remove-orphans && docker compose down
+#
+# $ curl http://localhost
+# Moved Permanently
+#
+# $ curl https://localhost
+# curl: (60) SSL certificate problem: self-signed certificate
+# More details here: https://curl.se/docs/sslcerts.html
+#
+# curl failed to verify the legitimacy of the server and therefore could not
+# establish a secure connection to it. To learn more about this situation and
+# how to fix it, please visit the webpage mentioned above.
+
+#networks:
+#  openstudiolandscapes_hub:
+#    name: network__openstudiolandscapes_hub
+#    external: true
+#  openstudiolandscapes_hub_traefik:
+#    name: network__openstudiolandscapes_hub_traefik
+#    external: true
+
+services:
+  service_openstudiolandscapes_hub_traefik:
+    # https://hub.docker.com/_/traefik
+    image: docker.io/library/traefik:v3.5.3
+    container_name: openstudiolandscapes-hub-traefik
+    ports:
+      - "80:80"
+      - "443:443"
+      # --> (Optional) Enable Dashboard, don't do in production
+      - "8080:8080"
+      # <--
+    volumes:
+      - /run/docker.sock:/run/docker.sock:ro
+      - ../.volumes/traefik/config/:/etc/traefik/:ro
+      - ../.volumes/traefik/certs/:/var/traefik/certs/:rw
+    env_file:
+      - path: ./.env
+        required: true
+    environment:
+      # https://go-acme.github.io/lego/dns/cloudns/index.html
+      - CLOUDNS_AUTH_ID=${ENV_CLOUDNS_AUTH_ID}
+      - CLOUDNS_AUTH_PASSWORD=${ENV_CLOUDNS_AUTH_PASSWORD}
+      - LEGO_DISABLE_CNAME_SUPPORT=true
+    networks:
+      - network_openstudiolandscapes_hub
+      - network_openstudiolandscapes_hub_traefik
+    restart: unless-stopped

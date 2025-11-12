@@ -1,25 +1,21 @@
-#networks:
-#  caddy:
-#    # create this first before running the docker-compose - docker network create caddy
-#    name: network_caddy
+networks:
+  network_openstudiolandscapes_hub:
+    name: network_openstudiolandscapes_hub
+#    external: false
+  network_openstudiolandscapes_hub_traefik:
+    name: network_openstudiolandscapes_hub_traefik
+#    external: false
 
 include:
-#  - path: caddy/ClouDNS/ClouDNS.docker-compose.yml
-#    project_directory: ./caddy/ClouDNS
-#  - path: jellyfin/docker-compose.yml
-#    project_directory: /home/user/git/repos/server/jellyfin
-#  - path: pi-hole/docker-compose.yml
-#    project_directory: /home/user/git/repos/server/pi-hole
-#  - path: filebrowser/docker-compose.yml
-#    project_directory: /home/user/git/repos/server/filebrowser
-  - path: teleport/docker-compose.yml
-    project_directory: /home/michael/git/repos/OpenStudioLandscapes-Infra/teleport
+  - path: traefik/docker-compose.traefik.yml
+    project_directory: ./traefik
+#  - path: registry/docker-compose.yml
+#    project_directory: ./registry
+  - path: pihole/docker-compose.pihole.yml
+    project_directory: ./pihole
+##  - path: filebrowser/docker-compose.yml
+##    project_directory: /home/user/git/repos/server/filebrowser
+#  - path: teleport/docker-compose.yml
+#    project_directory: /home/michael/git/repos/OpenStudioLandscapes-Infra/teleport
 #  - path: portainer/docker-compose.yml
 #    project_directory: ./portainer
-#  - path: volumio/docker-compose.yml
-#    project_directory: /home/user/git/repos/server/volumio
-#  - path:
-#    - jellyfin/docker-compose.yml
-#    - pi-hole/docker-compose.yml
-#    - transmission/docker-compose.yml
-#    - filebrowser/docker-compose.yml
