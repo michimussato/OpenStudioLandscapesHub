@@ -13,9 +13,11 @@ include:
 #    project_directory: ./traefik
 #  - path: registry/docker-compose.registry.yml
 #    project_directory: ./registry
-  - path: pihole/docker-compose.pihole.yml
-    project_directory: ./pihole
-  - path: teleport/docker-compose.teleport.yml
-    project_directory: ./teleport
-  - path: portainer/docker-compose.portainer.yml
-    project_directory: ./portainer
+#  - path: pihole/docker-compose.pihole.yml
+#    project_directory: ./pihole
+  - path: pangolin/docker-compose.pangolin.yml
+    project_directory: ./pangolin
+#  - path: teleport/docker-compose.teleport.yml
+#    project_directory: ./teleport
+#  - path: portainer/docker-compose.portainer.yml
+#    project_directory: ./portainer

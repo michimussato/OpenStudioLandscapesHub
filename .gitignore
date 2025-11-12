@@ -95,6 +95,8 @@ MANIFEST
 !.volumes/registry/data/.gitkeep
 
 # Pangolin
+.volumes/pangolin/config/config.yml
+!.volumes/pangolin/config/.gitkeep
 .volumes/pangolin/config/db/*
 !.volumes/pangolin/config/db/.gitkeep
 .volumes/pangolin/config/letsencrypt/*
