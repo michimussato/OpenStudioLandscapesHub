@@ -44,6 +44,12 @@ mkdir -p \
     ../.volumes/pangolin/config/logs
 ```
 
+`scp`
+```shell
+scp /home/michael/git/repos/OpenStudioLandscapesHub/.volumes/pangolin/config/config.yml user@192.168.178.10:/home/user/git/repos/OpenStudioLandscapesHub/.volumes/pangolin/config/
+scp /home/michael/git/repos/OpenStudioLandscapesHub/.volumes/pangolin/config/traefik/*.yml user@192.168.178.10:/home/user/git/repos/OpenStudioLandscapesHub/.volumes/pangolin/config/traefik/
+```
+
 ## `docker-compose.pangolin.yml`
 
 https://docs.pangolin.net/self-host/manual/docker-compose#docker-compose-configuration
