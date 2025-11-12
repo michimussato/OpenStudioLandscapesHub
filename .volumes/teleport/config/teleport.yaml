@@ -19,7 +19,8 @@ proxy_service:
   https_keypairs_reload_interval: 120s
   listen_addr: 0.0.0.0:3023
   public_addr:
-  - teleport.example.com:443  # <-- Set public_addr
+  - localhost:443  # <-- Set public_addr
+#  - teleport.example.com:443  # <-- Set public_addr
 #  - teleport.example.lan:443
 #  tunnel_listen_addr: 0.0.0.0:3024
   web_listen_addr: 0.0.0.0:3080

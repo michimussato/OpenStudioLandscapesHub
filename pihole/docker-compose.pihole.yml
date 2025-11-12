@@ -1,8 +1,7 @@
-#networks:
-#  pi-hole:
-#    name: network_pi-hole
+---
+
 services:
-  pihole-unbound:
+  service_openstudiolandscapes_hub_pihole:
     # https://docs.docker.com/reference/compose-file/services/#shm_size
     # docker exec -it pihole-unbound df /dev/shm
     # Note: docker compose restart won't reflect
@@ -10,10 +9,10 @@ services:
     # requires down -> up
     shm_size: 1gb
     cap_add: []
-    container_name: pihole-unbound
-    domainname: farm.evil
-    env_file:
-      - .env
+    container_name: openstudiolandscapes-hub-pihole-unbound
+#    domainname: farm.evil
+#    env_file:
+#      - .env
     environment:
       FTLCONF_dns_dnssec: 'true'
       FTLCONF_dns_listeningMode: all
@@ -23,7 +22,11 @@ services:
       FTLCONF_dns_revServers: ${REV_SERVER:-false},${REV_SERVER_CIDR},${REV_SERVER_TARGET},${REV_SERVER_DOMAIN}
       FTLCONF_webserver_port: 80
       TZ: Europe/Zurich
-    hostname: pihole-unbound.farm.evil
+    hostname: openstudiolandscapes-hub-pihole
+#    depends_on:
+#      service_openstudiolandscapes_hub_traefik:
+#        condition: "service_started"
+#        required: true
     image: docker.io/mpgirro/pihole-unbound:latest
     networks:
       - network_openstudiolandscapes_hub_traefik

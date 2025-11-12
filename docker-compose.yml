@@ -1,3 +1,5 @@
+---
+
 networks:
   network_openstudiolandscapes_hub:
     name: network_openstudiolandscapes_hub
@@ -7,15 +9,13 @@ networks:
 #    external: false
 
 include:
-  - path: traefik/docker-compose.traefik.yml
-    project_directory: ./traefik
-#  - path: registry/docker-compose.yml
+#  - path: traefik/docker-compose.traefik.yml
+#    project_directory: ./traefik
+#  - path: registry/docker-compose.registry.yml
 #    project_directory: ./registry
   - path: pihole/docker-compose.pihole.yml
     project_directory: ./pihole
-##  - path: filebrowser/docker-compose.yml
-##    project_directory: /home/user/git/repos/server/filebrowser
-#  - path: teleport/docker-compose.yml
-#    project_directory: /home/michael/git/repos/OpenStudioLandscapes-Infra/teleport
-#  - path: portainer/docker-compose.yml
-#    project_directory: ./portainer
+#  - path: teleport/docker-compose.teleport.yml
+#    project_directory: ./teleport
+  - path: portainer/docker-compose.portainer.yml
+    project_directory: ./portainer

@@ -55,36 +55,41 @@ MANIFEST
 .conda*/
 .python-version
 
-# Dagster
-.dagster/*
-!.dagster/.gitkeep
-!.dagster/dagster.yaml
-.dagster-postgres/*
-!.dagster-postgres/.gitkeep
-tmp*/
+## Dagster
+#.dagster/*
+#!.dagster/.gitkeep
+#!.dagster/dagster.yaml
+#.dagster-postgres/*
+#!.dagster-postgres/.gitkeep
+#tmp*/
 
-# Obsidian
-.obsidian/hotkeys.json
-.obsidian/workspace.json
-.obsidian/workspaces.json
+## Obsidian
+#.obsidian/hotkeys.json
+#.obsidian/workspace.json
+#.obsidian/workspaces.json
 
 # Teleport
-teleport/volumes/data
-!teleport/volumes/.gitkeep
-
-# Jellyfin
-jellyfin/volumes
-!jellyfin/volumes/.gitkeep
+.volumes/teleport/config/*
+!.volumes/teleport/config/.gitkeep
+.volumes/teleport/data/*
+!.volumes/teleport/data/.gitkeep
 
 # Pi-hole
-pi-hole/volumes/etc/pihole/*
-!pi-hole/volumes/.gitkeep
+.volumes/pihole/etc/dnsmasq.d/*
+!.volumes/pihole/etc/dnsmasq.d/.gitkeep
+.volumes/pihole/etc/pihole/*
+!.volumes/pihole/etc/pihole/.gitkeep
+.volumes/pihole/etc/unbound/unbound.conf.d/*
+!.volumes/pihole/etc/unbound/unbound.conf.d/.gitkeep
 
 # Portainer
-portainer/volumes
-!portainer/volumes/.gitkeep
+.volumes/portainer/portainer_data/*
+!.volumes/portainer/portainer_data/.gitkeep
 
-# Transmission
-transmission/volumes/*
-!transmission/volumes/.gitkeep
-!transmission/volumes/settings.json
+# Registry
+.volumes/registry/certs/*
+!.volumes/registry/certs/.gitkeep
+.volumes/registry/auth/*
+!.volumes/registry/auth/.gitkeep
+.volumes/registry/data/*
+!.volumes/registry/data/.gitkeep

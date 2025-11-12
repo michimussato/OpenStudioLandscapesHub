@@ -1,34 +1,25 @@
+---
+
 services:
-  portainer:
-    container_name: portainer
+  service_openstudiolandscapes_hub_portainer:
+    container_name: openstudiolandscapes-hub-portainer
     image: docker.io/portainer/portainer-ce:lts
-    hostname: portainer.farm.evil
-    domainname: farm.evil
-    depends_on:
-      caddy:
-        condition: service_started
+    hostname: openstudiolandscapes-hub-portainer
+#    depends_on:
+#      service_openstudiolandscapes_hub_traefik:
+#        condition: "service_started"
+#        required: true
     env_file:
       - .env
-    environment:
-      - TRUSTED_ORIGINS=portainer.teleport.openstudiolandscapes.cloud-ip.cc
-    restart: "no"
+#    environment:
+#      - TRUSTED_ORIGINS=portainer.teleport.openstudiolandscapes.cloud-ip.cc
+    restart: "unless-stopped"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-#      - portainer_data:/data
-#      -
-#    volumes:
 #      - /etc/localtime:/etc/localtime:ro
-      - ./volumes/portainer_data:/data:rw
+      - ../.volumes/portainer/portainer_data:/data:rw
     networks:
-      - caddy
-#    ports:
-#      - 9443:9443
-##      - 8000:8000  # Remove if you do not intend to use Edge Agents
-
-#volumes:
-#  portainer_data:
-#    name: portainer_data
-
-networks:
-  default:
-    name: portainer_network
+      - network_openstudiolandscapes_hub_traefik
+    ports:
+      - "9443:9443"
+#      - "8000:8000"  # Remove if you do not intend to use Edge Agents
