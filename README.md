@@ -7,6 +7,8 @@
   * [Requirements](#requirements)
   * [Up](#up)
   * [Topology](#topology)
+  * [DNS](#dns)
+    * [Zone File](#zone-file)
 <!-- TOC -->
 
 ---
@@ -41,6 +43,7 @@ Services provided:
 ## Requirements
 
 - `docker` ([Setup Guide](https://docs.docker.com/engine/install/))
+- [Domain](#dns)
 
 ## Up
 
@@ -112,4 +115,20 @@ flowchart TB
     registry-ui --> registry
     port_5000 o-- 5000 --o registry
     portainer o---o docker_sock
+```
+
+## DNS
+
+DNS-01 Challenge needs API access.
+
+### Zone File
+
+```
+$ORIGIN mydomain.com.
+@	3600	IN	SOA	[...]
+@	3600	IN	NS	[ns1].
+@	3600	IN	NS	[ns2].
+@	3600	IN	A	<MY_PUBLIC_IP>
+pangolin	3600	IN	CNAME	mydomain.com.
+*.pangolin	3600	IN	CNAME	pangolin.mydomain.com.
 ```
