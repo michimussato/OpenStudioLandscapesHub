@@ -1,21 +1,59 @@
+[![ Logo OpenStudioLandscapes ](https://github.com/michimussato/OpenStudioLandscapes/raw/main/media/images/logo128.png)](https://github.com/michimussato/OpenStudioLandscapes)
 
+---
+
+<!-- TOC -->
+* [OpenStudioLandscapesHub](#openstudiolandscapeshub)
+  * [Requirements](#requirements)
+  * [Up](#up)
+  * [Topology](#topology)
+<!-- TOC -->
 
 ---
 
 # OpenStudioLandscapesHub
 
+This is a basic Docker Compose setup for a distributed layout. 
+
+As long as you're running
+[OpenStudioLandscapes](https://github.com/michimussato/OpenStudioLandscapes) 
+on a single, isolated machine, embedding Landscapes into a 
+network infrastructure is not generally needed. 
+
+However, as soon as multiple machines are involved (for example workers in a render farm or 
+remote collaborators accessing your locally hosted OpenStudioLandscapes 
+resources), things can get complicated pretty quickly in case you
+don't have such a system set up already - like a local DNS server
+for instance.
+
+OpenStudioLandscapesHub provides a basic selection of services that
+enable a scalable OpenStudioLandscapes environment.
+
+Services provided:
+- [Pangolin](pangolin/README.md)
+- [Pi-Hole (DNS)](pihole/README.md)
+- [Docker Registry](registry/README.md)
+  - With Registry UI
+- [Portainer](portainer/README.md)
+- Apache Guacamole
+  - [For ARM (Raspberry Pi)](guacamole/README.md)
+
+## Requirements
+
+- `docker` ([Setup Guide](https://docs.docker.com/engine/install/))
+
 ## Up
 
 ```shell
-/usr/bin/docker \
-    compose \
-    --progress plain \
+docker compose \
     --file docker-compose.yml \
     --project-name openstudiolandscapes-hub \
     up \
     --remove-orphans \
     --detach
 ```
+
+## Topology
 
 ```mermaid
 ---
@@ -30,26 +68,48 @@ flowchart TB
     %%Line 3`"]
     subgraph "LAN"
         direction TB
-        router["`Router`"]
-        subgraph "docker-compose.yml" 
-            direction TB
-            traefik["`Traefik`"]
-            teleport["`Teleport`"]
-            pihole["`Pihole`"]
-            dns["`DNS`"]
-            portainer["`Portainer`"]
-            registry["`Registry`"]
+        router(("`Router/Firewall`"))
+        subgraph "OpenStudioLandscapesHub Host" 
+
+            subgraph "docker-compose.yml" 
+                direction TB
+                
+                subgraph "Exposed Ports"
+                    direction TB
+                    port_53(("53"))
+                    port_80(("80"))
+                    port_443(("443"))
+                    port_5000(("5000"))
+                end
+                
+                subgraph "Docker Compose Network" 
+                    direction TB
+                    pangolin["`Pangolin`"]
+                    guacamole["`Guacamole`"]
+                    pihole["`Pihole (DNS)`"]
+                    portainer["`Portainer`"]
+                    registry["`Registry`"]
+                    registry-ui["`Registry UI`"]
+                end
+                
+            end
+        docker_sock(("`Docker Socket`"))
         end
     end
     
     wan -- example.com --> router
-    router <-- 80, 443, 8080 --> traefik
-    traefik -- 443 --> teleport
-    teleport ---> pihole
-    pihole o--o dns
-    teleport ----> portainer
-    router <-- 5000 --> registry
-    router <-- 53 --> dns
-
-
+    router -- 53 --> port_53
+    router -- 80 --> port_80
+    router -- 443 --> port_443
+    router -- 5000 --> port_5000
+    port_53 o-- 53 --o pihole
+    port_80 o-- 80 --o pangolin
+    port_443 o-- 443 --o pangolin
+    pangolin ----> guacamole
+    pangolin ----> portainer
+    pangolin ----> registry-ui
+    pangolin ----> pihole
+    registry-ui --> registry
+    port_5000 o-- 5000 --o registry
+    portainer o---o docker_sock
 ```
