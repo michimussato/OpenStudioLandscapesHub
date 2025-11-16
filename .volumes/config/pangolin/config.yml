@@ -1,0 +1,21 @@
+app:
+  dashboard_url: "https://pangolin.openstudiolandscapes.cloud-ip.cc"
+  # https://docs.pangolin.net/self-host/telemetry#configuration
+  telemetry:
+    anonymous_usage: false  # Set to false to disable
+
+domains:
+  domain1:
+    base_domain: "pangolin.openstudiolandscapes.cloud-ip.cc"
+    cert_resolver: "letsencrypt"
+
+server:
+  secret: "my-strong-secret"
+
+gerbil:
+  base_endpoint: "pangolin.openstudiolandscapes.cloud-ip.cc"
+
+flags:
+  require_email_verification: false
+  disable_signup_without_invite: true
+  disable_user_create_org: true

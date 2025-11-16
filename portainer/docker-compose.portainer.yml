@@ -1,23 +1,22 @@
 services:
-  service_openstudiolandscapes_hub_portainer:
-    container_name: openstudiolandscapes-hub-portainer
+  portainer:
+    container_name: portainer
     image: docker.io/portainer/portainer-ce:lts
-    hostname: openstudiolandscapes-hub-portainer
-#    depends_on:
-#      service_openstudiolandscapes_hub_traefik:
-#        condition: "service_started"
-#        required: true
-    env_file:
-      - .env
-#    environment:
-#      - TRUSTED_ORIGINS=portainer.teleport.openstudiolandscapes.cloud-ip.cc
-    restart: "unless-stopped"
+    hostname: portainer
+#    labels:
+#      - pangolin.proxy-resources.portainer.name=Portainer
+#      - pangolin.proxy-resources.portainer.full-domain=portainer.pangolin.openstudiolandscapes.cloud-ip.cc
+#      - pangolin.proxy-resources.portainer.protocol=http
+#      - pangolin.proxy-resources.portainer.auth.sso-enabled=true
+#      - pangolin.proxy-resources.portainer.targets[0].method=https
+#      - pangolin.proxy-resources.portainer.targets[0].hostname=portainer
+#      - pangolin.proxy-resources.portainer.targets[0].port=9443
+    depends_on:
+      newt:
+        condition: service_started
+    environment:
+      - TRUSTED_ORIGINS=${TRUSTED_ORIGINS}
+    restart: always
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-#      - /etc/localtime:/etc/localtime:ro
-      - ../.volumes/portainer/portainer_data:/data:rw
-    networks:
-      - network_openstudiolandscapes_hub_traefik
-    ports:
-      - "9443:9443"
-#      - "8000:8000"  # Remove if you do not intend to use Edge Agents
+      - ../.volumes/data/portainer:/data:rw

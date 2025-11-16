@@ -1,4 +1,9 @@
-
+<!-- TOC -->
+* [Pi-hole Unbound](#pi-hole-unbound)
+  * [Configuration Options](#configuration-options)
+  * [`docker-compose.yml`](#docker-composeyml)
+  * [Wildcards](#wildcards)
+<!-- TOC -->
 
 ---
 
@@ -21,3 +26,9 @@
 ## `docker-compose.yml`
 
 - [https://github.com/mpgirro/docker-pihole-unbound/blob/main/example/compose.yaml](https://github.com/mpgirro/docker-pihole-unbound/blob/main/example/compose.yaml)
+
+## Wildcards
+
+Wildcard DNS in Pihole
+- https://hetzbiz.cloud/2022/03/04/wildcard-dns-in-pihole/
+- https://hardwoodhomelab.com/homelab/pi-hole_wildcard/

@@ -1,0 +1,70 @@
+api:
+  insecure: true
+  dashboard: true
+
+providers:
+  http:
+    endpoint: "http://pangolin:3001/api/v1/traefik-config"
+    pollInterval: "5s"
+  file:
+    filename: "/etc/traefik/dynamic_config.yml"
+
+experimental:
+  plugins:
+    badger:
+      moduleName: "github.com/fosrl/badger"
+      version: "v1.2.0"
+
+log:
+  level: "INFO"
+  format: "common"
+
+#certificatesResolvers:
+#  letsencrypt:
+#    acme:
+#      httpChallenge:
+#        entryPoint: web
+#      email: michimussato@gmail.com # REPLACE WITH YOUR EMAIL
+#      storage: "/letsencrypt/acme.json"
+#      caServer: "https://acme-v02.api.letsencrypt.org/directory"
+
+# -- Configure your CertificateResolver here...
+certificatesResolvers:
+  cloudns_staging:
+    acme:
+      email: michimussato@gmail.com  # <-- Change this to your email
+      storage: /letsencrypt/acme.cloudns_staging.json
+      caServer: "https://acme-staging-v02.api.letsencrypt.org/directory"
+      dnsChallenge:
+        provider: cloudns  # <-- (Optional) Change this to your DNS provider
+        resolvers:
+          - "8.8.4.4:53"
+          - "8.8.8.8:53"
+  cloudns_production:
+    acme:
+      email: michimussato@gmail.com  # <-- Change this to your email
+      storage: /letsencrypt/acme.cloudns_production.json
+      caServer: "https://acme-v02.api.letsencrypt.org/directory"
+      dnsChallenge:
+        provider: cloudns  # <-- (Optional) Change this to your DNS provider
+        resolvers:
+          - "8.8.4.4:53"
+          - "8.8.8.8:53"
+
+entryPoints:
+  web:
+    address: ":80"
+  websecure:
+    address: ":443"
+    transport:
+      respondingTimeouts:
+        readTimeout: "30m"
+    http:
+      tls:
+        certResolver: "cloudns_production"
+
+serversTransport:
+  insecureSkipVerify: true
+
+ping:
+    entryPoint: "web"

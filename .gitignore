@@ -14,6 +14,9 @@ __pycache__/*
 */.ipynb_checkpoints/*
 .DS_Store
 *.env
+# Include all env files in ./.env/
+!.env/
+!.env/template.*.env
 
 # Project files
 .ropeproject
@@ -55,59 +58,5 @@ MANIFEST
 .conda*/
 .python-version
 
-## Dagster
-#.dagster/*
-#!.dagster/.gitkeep
-#!.dagster/dagster.yaml
-#.dagster-postgres/*
-#!.dagster-postgres/.gitkeep
-#tmp*/
-
-## Obsidian
-#.obsidian/hotkeys.json
-#.obsidian/workspace.json
-#.obsidian/workspaces.json
-
-# Teleport
-.volumes/teleport/config/*
-!.volumes/teleport/config/.gitkeep
-.volumes/teleport/data/*
-!.volumes/teleport/data/.gitkeep
-
-# Pi-hole
-.volumes/pihole/etc/dnsmasq.d/*
-!.volumes/pihole/etc/dnsmasq.d/.gitkeep
-.volumes/pihole/etc/pihole/*
-!.volumes/pihole/etc/pihole/.gitkeep
-.volumes/pihole/etc/unbound/unbound.conf.d/*
-!.volumes/pihole/etc/unbound/unbound.conf.d/.gitkeep
-
-# Portainer
-.volumes/portainer/portainer_data/*
-!.volumes/portainer/portainer_data/.gitkeep
-
-# Registry
-.volumes/registry/certs/*
-!.volumes/registry/certs/.gitkeep
-.volumes/registry/auth/*
-!.volumes/registry/auth/.gitkeep
-.volumes/registry/data/*
-!.volumes/registry/data/.gitkeep
-
-# Pangolin
-.volumes/pangolin/config/config.yml
-!.volumes/pangolin/config/.gitkeep
-.volumes/pangolin/config/db/*
-!.volumes/pangolin/config/db/.gitkeep
-.volumes/pangolin/config/letsencrypt/*
-!.volumes/pangolin/config/letsencrypt/.gitkeep
-.volumes/pangolin/config/logs/*
-!.volumes/pangolin/config/logs/.gitkeep
-.volumes/pangolin/config/traefik/*
-!.volumes/pangolin/config/traefik/.gitkeep
-.volumes/pangolin/data/certificates/*
-!.volumes/pangolin/data/certificates/.gitkeep
-.volumes/pangolin/data/dynamic/*
-!.volumes/pangolin/data/dynamic/.gitkeep
-
-/.workfiles/
+# Ignore data volumes
+.volumes/data

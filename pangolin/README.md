@@ -5,6 +5,11 @@
   * [Traefik](#traefik)
     * [Static `traefik_config.yml`](#static-traefik_configyml)
     * [Dynamic `dynamic_config.yml`](#dynamic-dynamic_configyml)
+    * [DNS](#dns)
+      * [Wildcard Domains](#wildcard-domains)
+  * [Firewall](#firewall)
+  * [Site](#site)
+  * [Proxy Blueprints](#proxy-blueprints)
 <!-- TOC -->
 
 ---
@@ -74,3 +79,76 @@ https://docs.pangolin.net/self-host/manual/docker-compose#traefik-dynamic-config
 
 https://docs.pangolin.net/self-host/advanced/wild-card-domains
 
+## Firewall
+
+Open ports on firewall for 80 (TCP), 443 (TCP), 51820 (UDP), and 21820 (UDP for clients)
+https://docs.pangolin.net/self-host/quick-install#prerequisites
+
+## Site
+
+At least ONE SITE must be online in order to be able to work.
+
+## Proxy Blueprints
+
+https://docs.pangolin.net/manage/blueprints
+
+> [!WARNING]
+> 
+> Bug: Creating Resource via Blueprint or with Labels
+> not working after reboot. 
+> Documented [here](https://github.com/fosrl/pangolin/issues/1709#issuecomment-3529004161).
+> Use manual using the Web UI for now.
+
+Current (manual) Resources:
+
+![2025-11-13_19-27.png](.media/2025-11-13_19-27.png)
+
+```yaml
+proxy-resources:
+  nice-resource-id:
+    name: "Nice Resource Name"
+    # subdomain: 
+    full-domain: resource.pangolin.openstudiolandscapes.cloud-ip.cc
+    protocol: http
+    auth:
+      sso-enabled: true
+    targets:
+      - site: <site-nice-id>
+        hostname: <resource>
+        method: http
+        port: <port>
+```
+
+is equivalent to
+
+https://docs.pangolin.net/manage/blueprints#docker-labels-format
+
+```yaml
+services:
+  transmission:
+    labels:
+      - pangolin.proxy-resources.transmission.name=Transmission
+      - pangolin.proxy-resources.transmission.full-domain=transmission.pangolin.openstudiolandscapes.cloud-ip.cc
+      - pangolin.proxy-resources.transmission.protocol=http
+      - pangolin.proxy-resources.transmission.auth.sso-enabled=true
+      - pangolin.proxy-resources.transmission.targets[0].method=http
+      - pangolin.proxy-resources.transmission.targets[0].hostname=transmission
+      - pangolin.proxy-resources.transmission.targets[0].port=9091
+```
+
+and make sure to add
+
+```yaml
+services:
+  newt:
+    environment:
+      - DOCKER_SOCKET=/var/run/docker.sock
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+networks:
+  default:
+    name: pangolin_default
+```
+
+to the `newt` service.

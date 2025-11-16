@@ -1,21 +1,42 @@
-networks:
-  network_openstudiolandscapes_hub:
-    name: network_openstudiolandscapes_hub
-#    external: false
-  network_openstudiolandscapes_hub_traefik:
-    name: network_openstudiolandscapes_hub_traefik
-#    external: false
+# Use include to modularize Compose files
+# https://docs.docker.com/reference/compose-file/include/
+#
+# Run with
+# docker compose --file docker-compose.yml --project-name openstudiolandscapes-hub up --remove-orphans --detach
 
 include:
-#  - path: traefik/docker-compose.traefik.yml
-#    project_directory: ./traefik
-#  - path: registry/docker-compose.registry.yml
-#    project_directory: ./registry
-#  - path: pihole/docker-compose.pihole.yml
-#    project_directory: ./pihole
-  - path: pangolin/docker-compose.pangolin.yml
+
+  - # Guacamole for ARM (Raspberry PI 5)
+    project_directory: ./guacamole
+    path:
+      - ./guacamole/docker-compose.guacamole.yml
+    env_file:
+      - .env/guacamole.env
+
+  - # Pangolin
     project_directory: ./pangolin
-#  - path: teleport/docker-compose.teleport.yml
-#    project_directory: ./teleport
-#  - path: portainer/docker-compose.portainer.yml
-#    project_directory: ./portainer
+    path:
+      - ./pangolin/docker-compose.pangolin.yml
+    env_file:
+      - ./.env/pangolin.env
+
+  - # Pihole
+    project_directory: ./pi-hole
+    path:
+      - ./pi-hole/docker-compose.pi-hole.yml
+    env_file:
+      - .env/pi-hole.env
+
+  - # Portainer
+    project_directory: ./portainer
+    path:
+      - ./portainer/docker-compose.portainer.yml
+    env_file:
+      - .env/portainer.env
+
+  - # Registry
+    project_directory: ./registry
+    path:
+      - ./registry/docker-compose.registry.yml
+    env_file:
+      - .env/registry.env
