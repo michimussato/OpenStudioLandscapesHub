@@ -7,14 +7,6 @@ services:
     container_name: guacamole
     env_file:
       - ../.env/guacamole.env
-#    environment:
-#      TZ: ${TZ}
-#      # EXTENSIONS: 'auth-totp,auth-ldap'
-#      # https://guacamole.apache.org/doc/gug/recording-playback.html#
-#      RECORDING_ENABLED: ${RECORDING_ENABLED}
-#      # https://guacamole.apache.org/doc/gug/json-auth.html#
-#      # JSON_ENABLED: "true"
-#      # JSON_SECRET_KEY: 4c0b569e4c96df157eee1b65dd0e4d41
     volumes:
       - ../.volumes/data/guacamole/postgres:/config
       - ../.volumes/data/guacamole/recordings:/var/lib/guacamole/recordings

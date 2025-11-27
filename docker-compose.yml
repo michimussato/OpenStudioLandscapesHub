@@ -30,3 +30,25 @@ include:
     project_directory: ./registry
     path:
       - ./registry/docker-compose.registry.yml
+
+
+services:
+  newt:
+    image: fosrl/newt
+    container_name: newt
+    restart: unless-stopped
+    environment:
+      - PANGOLIN_ENDPOINT=${PANGOLIN_ENDPOINT}
+      - NEWT_ID=${NEWT_ID}
+      - NEWT_SECRET=${NEWT_SECRET}
+      - ACCEPT_CLIENTS=${ACCEPT_CLIENTS:-false}
+    #############################################
+    # Leave this intact
+      - DOCKER_SOCKET=/var/run/docker.sock
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    #############################################
+
+networks:
+  default:
+    name: pangolin_default

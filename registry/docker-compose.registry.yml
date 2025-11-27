@@ -21,19 +21,6 @@ services:
       - ../.volumes/data/registry/auth:/auth:ro
     env_file:
       - ../.env/registry.env
-    environment:
-      REGISTRY_HTTP_TLS_CERTIFICATE: ${REGISTRY_HTTP_TLS_CERTIFICATE}
-      REGISTRY_HTTP_TLS_KEY: ${REGISTRY_HTTP_TLS_KEY}
-      REGISTRY_AUTH: ${REGISTRY_AUTH}
-      REGISTRY_AUTH_HTPASSWD_REALM: ${REGISTRY_AUTH_HTPASSWD_REALM}
-      REGISTRY_AUTH_HTPASSWD_PATH: ${REGISTRY_AUTH_HTPASSWD_PATH}
-      # https://github.com/Joxit/docker-registry-ui?tab=readme-ov-file#recommended-docker-registry-usage
-      REGISTRY_HTTP_HEADERS_Access-Control-Allow-Origin: ${REGISTRY_HTTP_HEADERS_Access-Control-Allow-Origin}
-      REGISTRY_HTTP_HEADERS_Access-Control-Allow-Methods: ${REGISTRY_HTTP_HEADERS_Access-Control-Allow-Methods}
-      REGISTRY_HTTP_HEADERS_Access-Control-Allow-Credentials: ${REGISTRY_HTTP_HEADERS_Access-Control-Allow-Credentials}
-      REGISTRY_HTTP_HEADERS_Access-Control-Allow-Headers: ${REGISTRY_HTTP_HEADERS_Access-Control-Allow-Headers}
-      REGISTRY_HTTP_HEADERS_Access-Control-Expose-Headers: ${REGISTRY_HTTP_HEADERS_Access-Control-Expose-Headers}
-      REGISTRY_STORAGE_DELETE_ENABLED: ${REGISTRY_STORAGE_DELETE_ENABLED}
     ports:
       - "5000:5000"
 
@@ -45,16 +32,4 @@ services:
         condition: service_started
     env_file:
       - ../.env/registry.env
-    environment:
-      SINGLE_REGISTRY: ${SINGLE_REGISTRY}
-      REGISTRY_TITLE: ${REGISTRY_TITLE}
-      DELETE_IMAGES: ${DELETE_IMAGES}
-      SHOW_CONTENT_DIGEST: ${SHOW_CONTENT_DIGEST}
-      NGINX_PROXY_PASS_URL: ${NGINX_PROXY_PASS_URL}
-      SHOW_CATALOG_NB_TAGS: ${SHOW_CATALOG_NB_TAGS}
-      CATALOG_MIN_BRANCHES: ${CATALOG_MIN_BRANCHES}
-      CATALOG_MAX_BRANCHES: ${CATALOG_MAX_BRANCHES}
-      TAGLIST_PAGE_SIZE: ${TAGLIST_PAGE_SIZE}
-      REGISTRY_SECURED: ${REGISTRY_SECURED}
-      CATALOG_ELEMENTS_LIMIT: ${CATALOG_ELEMENTS_LIMIT}
     container_name: registry-ui
