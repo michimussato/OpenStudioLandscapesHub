@@ -19,6 +19,8 @@ services:
       - ../.volumes/data/registry/data:/var/lib/registry:rw
       - ../.volumes/data/registry/certs:/certs:ro
       - ../.volumes/data/registry/auth:/auth:ro
+    env_file:
+      - ../.env/registry.env
     environment:
       REGISTRY_HTTP_TLS_CERTIFICATE: ${REGISTRY_HTTP_TLS_CERTIFICATE}
       REGISTRY_HTTP_TLS_KEY: ${REGISTRY_HTTP_TLS_KEY}
@@ -26,12 +28,12 @@ services:
       REGISTRY_AUTH_HTPASSWD_REALM: ${REGISTRY_AUTH_HTPASSWD_REALM}
       REGISTRY_AUTH_HTPASSWD_PATH: ${REGISTRY_AUTH_HTPASSWD_PATH}
       # https://github.com/Joxit/docker-registry-ui?tab=readme-ov-file#recommended-docker-registry-usage
-      REGISTRY_HTTP_HEADERS_Access-Control-Allow-Origin: '[https://registry-ui.pangolin.<YOUR_DOMAIN>]'  # <-- CHANGE ME
-      REGISTRY_HTTP_HEADERS_Access-Control-Allow-Methods: '[HEAD,GET,OPTIONS,DELETE]'
-      REGISTRY_HTTP_HEADERS_Access-Control-Allow-Credentials: '[true]'
-      REGISTRY_HTTP_HEADERS_Access-Control-Allow-Headers: '[Authorization,Accept,Cache-Control]'
-      REGISTRY_HTTP_HEADERS_Access-Control-Expose-Headers: '[Docker-Content-Digest]'
-      REGISTRY_STORAGE_DELETE_ENABLED: 'true'
+      REGISTRY_HTTP_HEADERS_Access-Control-Allow-Origin: ${REGISTRY_HTTP_HEADERS_Access-Control-Allow-Origin}
+      REGISTRY_HTTP_HEADERS_Access-Control-Allow-Methods: ${REGISTRY_HTTP_HEADERS_Access-Control-Allow-Methods}
+      REGISTRY_HTTP_HEADERS_Access-Control-Allow-Credentials: ${REGISTRY_HTTP_HEADERS_Access-Control-Allow-Credentials}
+      REGISTRY_HTTP_HEADERS_Access-Control-Allow-Headers: ${REGISTRY_HTTP_HEADERS_Access-Control-Allow-Headers}
+      REGISTRY_HTTP_HEADERS_Access-Control-Expose-Headers: ${REGISTRY_HTTP_HEADERS_Access-Control-Expose-Headers}
+      REGISTRY_STORAGE_DELETE_ENABLED: ${REGISTRY_STORAGE_DELETE_ENABLED}
     ports:
       - "5000:5000"
 
@@ -41,16 +43,18 @@ services:
     depends_on:
       registry:
         condition: service_started
+    env_file:
+      - ../.env/registry.env
     environment:
-      - SINGLE_REGISTRY=true
-      - REGISTRY_TITLE=OpenStudioLandscapes Hub Registry
-      - DELETE_IMAGES=true
-      - SHOW_CONTENT_DIGEST=true
-      - NGINX_PROXY_PASS_URL=https://registry:5000
-      - SHOW_CATALOG_NB_TAGS=true
-      - CATALOG_MIN_BRANCHES=1
-      - CATALOG_MAX_BRANCHES=1
-      - TAGLIST_PAGE_SIZE=100
-      - REGISTRY_SECURED=false
-      - CATALOG_ELEMENTS_LIMIT=1000
+      SINGLE_REGISTRY: ${SINGLE_REGISTRY}
+      REGISTRY_TITLE: ${REGISTRY_TITLE}
+      DELETE_IMAGES: ${DELETE_IMAGES}
+      SHOW_CONTENT_DIGEST: ${SHOW_CONTENT_DIGEST}
+      NGINX_PROXY_PASS_URL: ${NGINX_PROXY_PASS_URL}
+      SHOW_CATALOG_NB_TAGS: ${SHOW_CATALOG_NB_TAGS}
+      CATALOG_MIN_BRANCHES: ${CATALOG_MIN_BRANCHES}
+      CATALOG_MAX_BRANCHES: ${CATALOG_MAX_BRANCHES}
+      TAGLIST_PAGE_SIZE: ${TAGLIST_PAGE_SIZE}
+      REGISTRY_SECURED: ${REGISTRY_SECURED}
+      CATALOG_ELEMENTS_LIMIT: ${CATALOG_ELEMENTS_LIMIT}
     container_name: registry-ui

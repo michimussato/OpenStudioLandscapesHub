@@ -37,8 +37,7 @@ Services provided:
 - [Docker Registry](registry/README.md)
   - With Registry UI
 - [Portainer](portainer/README.md)
-- Apache Guacamole
-  - [For ARM (Raspberry Pi)](guacamole/README.md)
+- [Apache Guacamole (Multi-Arch)](guacamole/README.md)
 
 ## Requirements
 

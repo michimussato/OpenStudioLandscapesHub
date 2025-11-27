@@ -8,15 +8,8 @@ services:
     shm_size: 1gb
     cap_add: []
     container_name: pihole-unbound
-    environment:
-      - FTLCONF_dns_dnssec=${FTLCONF_dns_dnssec}
-      - FTLCONF_dns_listeningMode=${FTLCONF_dns_listeningMode}
-      - FTLCONF_dns_upstreams=${FTLCONF_dns_upstreams}
-      - FTLCONF_webserver_api_password=${FTLCONF_webserver_api_password}
-      - FTLCONF_webserver_interface_theme=${FTLCONF_webserver_interface_theme}
-      - FTLCONF_dns_revServers=${FTLCONF_dns_revServers}
-      - FTLCONF_webserver_port=${FTLCONF_webserver_port}
-      - TZ=${TZ}
+    env_file:
+      - ../.env/pihole.env
     hostname: pihole-unbound
     image: docker.io/mpgirro/pihole-unbound:latest
 #    labels:

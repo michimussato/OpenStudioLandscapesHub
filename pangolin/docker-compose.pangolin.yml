@@ -49,14 +49,8 @@ services:
   traefik:
     image: traefik:v3.4.0
     container_name: traefik
-    ############################
-    # USE THIS FOR DNS-CHALLENGE
-    environment:
-      # https://go-acme.github.io/lego/dns/cloudns/index.html
-      - CLOUDNS_AUTH_ID=${ENV_CLOUDNS_AUTH_ID}
-      - CLOUDNS_AUTH_PASSWORD=${ENV_CLOUDNS_AUTH_PASSWORD}
-      - LEGO_DISABLE_CNAME_SUPPORT=${LEGO_DISABLE_CNAME_SUPPORT}
-    ############################
+    env_file:
+      - ../.env/pangolin.env
     restart: unless-stopped
     network_mode: service:gerbil # Ports appear on the gerbil service
     depends_on:

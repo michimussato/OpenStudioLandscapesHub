@@ -14,8 +14,8 @@ services:
     depends_on:
       newt:
         condition: service_started
-    environment:
-      - TRUSTED_ORIGINS=${TRUSTED_ORIGINS}
+    env_file:
+      - ../.env/portainer.env
     restart: always
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
