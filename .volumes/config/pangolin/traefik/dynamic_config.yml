@@ -22,7 +22,7 @@ http:
         - websecure
       tls:
 #        certResolver: letsencrypt
-        certResolver: cloudns_production
+        certResolver: "<RESOLVER>"  # <-- i.e. "cloudflare_production"
         domains:
           - main: "pangolin.<YOUR_DOMAIN>"
             sans:
@@ -35,7 +35,7 @@ http:
       entryPoints:
         - websecure
       tls:
-        certResolver: cloudns_production
+        certResolver: "<RESOLVER>"  # <-- i.e. "cloudflare_production"
 
     # WebSocket router
     ws-router:
@@ -44,7 +44,7 @@ http:
       entryPoints:
         - websecure
       tls:
-        certResolver: cloudns_production
+        certResolver: "<RESOLVER>"  # <-- i.e. "cloudflare_production"
 
   services:
     next-service:
