@@ -10,33 +10,23 @@ include:
     project_directory: ./guacamole
     path:
       - ./guacamole/docker-compose.guacamole.yml
-    # env_file:
-    #   - .env/guacamole.env
 
   - # Pangolin
     project_directory: ./pangolin
     path:
       - ./pangolin/docker-compose.pangolin.yml
-    # env_file:
-    #   - ./.env/pangolin.env
 
   - # Pihole
     project_directory: ./pihole
     path:
       - ./pihole/docker-compose.pi-hole.yml
-    # env_file:
-    #   - .env/pi-hole.env
 
   - # Portainer
     project_directory: ./portainer
     path:
       - ./portainer/docker-compose.portainer.yml
-    # env_file:
-    #   - .env/portainer.env
 
   - # Registry
     project_directory: ./registry
     path:
       - ./registry/docker-compose.registry.yml
-    # env_file:
-    #   - .env/registry.env
