@@ -67,7 +67,7 @@ References
 - https://github.com/jeffspiinthesky/pki/blob/main/create_ca_cert.sh
 
 ```shell
-git -C ~/git/repos clone https://github.com/jeffspiinthesky/pki
+git clone https://github.com/jeffspiinthesky/pki
 cd pki
 chmod +x *.sh
 ```
@@ -152,14 +152,14 @@ basicConstraints = critical, CA:true
 ```
 
 ```shell
-cp ./private_keys/registry.openstudiolandscapes.lan.key ~/git/repos/server/registry/volumes/certs/
-cp ./public_keys/registry.openstudiolandscapes.lan.crt ~/git/repos/server/registry/volumes/certs/
+cp ./private_keys/registry.openstudiolandscapes.lan.key <PATH_TO_OPENSTUDIOLANDSCAPESHUB_REPO>/.volumes/data/registry/certs/
+cp ./public_keys/registry.openstudiolandscapes.lan.crt <PATH_TO_OPENSTUDIOLANDSCAPESHUB_REPO>/.volumes/data/registry/certs/
 ```
 
 ## Add User/Password to `htpasswd`
 
 ```shell
-docker run --entrypoint htpasswd httpd:2 -Bbn registry-user registry-password >> ~/git/repos/server/registry/volumes/auth/htpasswd
+docker run --entrypoint htpasswd httpd:2 -Bbn registry-user registry-password >> <PATH_TO_OPENSTUDIOLANDSCAPESHUB_REPO>/.volumes/data/registry/auth/htpasswd
 ```
 
 ## Add `rootCA.crt` to CA-Certificates Store
@@ -197,6 +197,17 @@ sudo trust anchor --store ~/Downloads/rootCA.crt
 ```
 
 ## Login to Docker
+
+> [!IMPORTANT]
+> 
+> Adding a root CA while the `docker` daemon is running requires
+> a `docker` daemon restart
+> > ```
+> > Error response from daemon: Get "https://registry.<YOUR_LAN_DOMAIN>:5000/v2/": tls: failed to verify certificate: x509: certificate signed by unknown authority
+> > ```
+> ```shell
+> sudo systemctl restart docker
+> ```
 
 ```shell
 docker login registry.openstudiolandscapes.lan:5000
