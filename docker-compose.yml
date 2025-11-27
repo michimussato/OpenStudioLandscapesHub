@@ -3,6 +3,12 @@
 #
 # Run with
 # PANGOLIN_ENDPOINT= NEWT_ID= NEWT_SECRET= docker compose --file docker-compose.yml --project-name openstudiolandscapes-hub up --remove-orphans --detach
+#
+# Log with
+# docker compose --file docker-compose.yml --project-name openstudiolandscapes-hub log --follow
+#
+# Down with
+# docker compose --file docker-compose.yml --project-name openstudiolandscapes-hub down
 
 include:
 
