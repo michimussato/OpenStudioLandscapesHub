@@ -35,7 +35,7 @@ Services provided:
 - [Pangolin](pangolin/README.md)
 - [Pi-Hole (DNS)](pihole/README.md)
 - [Docker Registry](registry/README.md)
-  - With Registry UI
+  - [With Registry UI](https://hub.docker.com/r/joxit/docker-registry-ui)
 - [Portainer](portainer/README.md)
 - [Apache Guacamole (Multi-Arch)](guacamole/README.md)
 
