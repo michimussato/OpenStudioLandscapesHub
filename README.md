@@ -6,9 +6,9 @@
 * [OpenStudioLandscapesHub](#openstudiolandscapeshub)
   * [Requirements](#requirements)
   * [Up](#up)
-  * [Topology](#topology)
+  * [Topology Concept](#topology-concept)
   * [DNS](#dns)
-    * [Zone File](#zone-file)
+    * [Zone File Example for mydomain.com](#zone-file-example-for-mydomaincom)
 <!-- TOC -->
 
 ---
@@ -38,7 +38,9 @@ don't have such a system set up already - like a local DNS server
 for instance.
 
 OpenStudioLandscapesHub provides a basic selection of services that
-enable a scalable OpenStudioLandscapes environment.
+enable a scalable OpenStudioLandscapes environment. A core system
+of this Hub is [Pangonlin](https://docs.pangolin.net/). It's open source and free (when hosted
+locally).
 
 Services provided:
 - [Pangolin](pangolin/README.md)
