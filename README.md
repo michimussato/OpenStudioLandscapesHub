@@ -15,14 +15,23 @@
 
 # OpenStudioLandscapesHub
 
-This is a basic Docker Compose setup for a distributed layout. 
+> [!WARNING]
+> 
+> This is a work in progress concept. The provided setup
+> is functional but might need some manual configuration and tweaking.
+> Once this 
 
-As long as you're running
-[OpenStudioLandscapes](https://github.com/michimussato/OpenStudioLandscapes) 
-on a single, isolated machine, embedding Landscapes into a 
-network infrastructure is not generally needed. 
+This is a basic Docker Compose setup to provide distributed teams (remote workers)
+access to your resources created with [OpenStudioLandscapes](https://github.com/michimussato/OpenStudioLandscapes).
 
-However, as soon as multiple machines are involved (for example workers in a render farm or 
+> [!NOTE]
+> 
+> As long as you're running
+> [OpenStudioLandscapes](https://github.com/michimussato/OpenStudioLandscapes) 
+> on a single, isolated machine, embedding Landscapes into a 
+> network infrastructure is not generally needed. 
+
+As soon as multiple machines are involved (for example workers in a render farm or 
 remote collaborators accessing your locally hosted OpenStudioLandscapes 
 resources), things can get complicated pretty quickly in case you
 don't have such a system set up already - like a local DNS server
@@ -55,7 +64,7 @@ docker compose \
     --detach
 ```
 
-## Topology
+## Topology Concept
 
 ```mermaid
 ---
@@ -120,7 +129,7 @@ flowchart TB
 
 DNS-01 Challenge needs API access.
 
-### Zone File
+### Zone File Example for mydomain.com
 
 ```
 $ORIGIN mydomain.com.
