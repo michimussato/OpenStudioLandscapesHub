@@ -40,7 +40,7 @@ for instance.
 
 OpenStudioLandscapesHub provides a basic selection of services that
 enable a scalable OpenStudioLandscapes environment. A core system
-of this Hub is [Pangonlin](https://docs.pangolin.net/). It's open source and free (when hosted
+of this Hub is [Pangolin](https://docs.pangolin.net/). It's open source and free (when hosted
 locally).
 
 Services provided:
