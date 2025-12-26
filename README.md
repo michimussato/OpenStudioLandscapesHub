@@ -19,7 +19,8 @@
 > 
 > This is a work in progress concept. The provided setup
 > is functional but might need some manual configuration and tweaking.
-> Once this 
+> This guide will improve over time. Once it's consiered finished,
+> this warning will be removed.
 
 This is a basic Docker Compose setup to provide distributed teams (remote workers)
 access to your resources created with [OpenStudioLandscapes](https://github.com/michimussato/OpenStudioLandscapes).
