@@ -4,7 +4,7 @@ services:
     container_name: pangolin
     restart: unless-stopped
     volumes:
-      - ../.volumes/config/pangolin/config.yml:/app/config/config.yml
+      - ../.volumes/config/pangolin/:/app/config/
       - ../.volumes/data/pangolin/certificates:/var/certificates
       - ../.volumes/data/pangolin/dynamic:/var/dynamic
     healthcheck:
