@@ -24,7 +24,7 @@ log:
 #    acme:
 #      httpChallenge:
 #        entryPoint: web
-#      email: <YOUR_EMAIL> # REPLACE WITH YOUR EMAIL
+#      email: francescofaranna@gmail.com # REPLACE WITH YOUR EMAIL
 #      storage: "/letsencrypt/acme.json"
 #      caServer: "https://acme-v02.api.letsencrypt.org/directory"
 
@@ -36,7 +36,7 @@ certificatesResolvers:
 #  # https://go-acme.github.io/lego/dns/cloudflare/index.html
   cloudflare_production:
     acme:
-      email: <YOUR_EMAIL>  # <-- Change this to your email
+      email: francescofaranna@gmail.com  # <-- Change this to your email
       storage: /letsencrypt/acme.cloudflare_production.json
       caServer: "https://acme-v02.api.letsencrypt.org/directory"
       dnsChallenge:
