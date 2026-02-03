@@ -67,7 +67,7 @@ services:
 
 # If Pangolin is used in its own Docker Compose setup,
 # uncomment this:
-networks:
-  default:
-    driver: bridge
-    name: pangolin
+#networks:
+#  default:
+#    driver: bridge
+#    name: pangolin

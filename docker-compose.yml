@@ -54,7 +54,8 @@ include:
 #    volumes:
 #      - /var/run/docker.sock:/var/run/docker.sock
 #    #############################################
-#
-#networks:
-#  default:
-#    name: pangolin_default
+
+networks:
+  default:
+    driver: bridge
+    name: pangolin

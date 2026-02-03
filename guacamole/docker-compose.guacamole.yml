@@ -5,8 +5,8 @@ services:
   guacamole:
     image: flcontainers/guacamole
     container_name: guacamole
-    networks:
-      - pangolin
+#    networks:
+#      - pangolin
     env_file:
       - ../.env/guacamole.env
     volumes:
