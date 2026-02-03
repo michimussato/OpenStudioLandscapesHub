@@ -22,10 +22,10 @@ include:
     path:
       - ./pangolin/docker-compose.pangolin.yml
 
-#  - # Pihole
-#    project_directory: ./pihole
-#    path:
-#      - ./pihole/docker-compose.pi-hole.yml
+  - # Pihole
+    project_directory: ./pihole
+    path:
+      - ./pihole/docker-compose.pi-hole.yml
 
   - # Portainer
     project_directory: ./portainer
