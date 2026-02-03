@@ -14,4 +14,4 @@ services:
       - ../.volumes/data/guacamole/recordings:/var/lib/guacamole/recordings
       - /etc/localtime:/etc/localtime:ro
 #    ports:
-#      - "4822:4822"
+#      - 8080:8080
