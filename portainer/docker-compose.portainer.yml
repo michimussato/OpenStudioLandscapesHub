@@ -11,9 +11,9 @@ services:
 #      - pangolin.proxy-resources.portainer.targets[0].method=https
 #      - pangolin.proxy-resources.portainer.targets[0].hostname=portainer
 #      - pangolin.proxy-resources.portainer.targets[0].port=9443
-    depends_on:
-      newt:
-        condition: service_started
+#    depends_on:
+#      newt:
+#        condition: service_started
     env_file:
       - ../.env/portainer.env
     restart: always
