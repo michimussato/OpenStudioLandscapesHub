@@ -5,9 +5,13 @@ services:
   guacamole:
     image: flcontainers/guacamole
     container_name: guacamole
+    networks:
+      - pangolin
     env_file:
       - ../.env/guacamole.env
     volumes:
       - ../.volumes/data/guacamole/postgres:/config
       - ../.volumes/data/guacamole/recordings:/var/lib/guacamole/recordings
       - /etc/localtime:/etc/localtime:ro
+#    ports:
+#      - "4822:4822"
