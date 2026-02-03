@@ -23,9 +23,9 @@ services:
 #      - pangolin.proxy-resources.pihole.targets[0].method=http
 #      - pangolin.proxy-resources.pihole.targets[0].hostname=pihole
 #      - pangolin.proxy-resources.pihole.targets[0].port=80
-    depends_on:
-      newt:
-        condition: service_started
+#    depends_on:
+#      newt:
+#        condition: service_started
     ports:
     - "53:53/tcp"
     - "53:53/udp"
