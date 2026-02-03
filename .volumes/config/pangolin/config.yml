@@ -7,7 +7,7 @@ app:
 domains:
   domain1:
     base_domain: "pangolin.faranna.de"
-    cert_resolver: "letsencrypt"
+    cert_resolver: "cloudflare_production"
 
 server:
   secret: "my-strong-secret"
