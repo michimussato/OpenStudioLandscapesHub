@@ -12,9 +12,9 @@ services:
 #      - pangolin.proxy-resources.registry.targets[0].method=https
 #      - pangolin.proxy-resources.registry.targets[0].hostname=registry
 #      - pangolin.proxy-resources.registry.targets[0].port=5000
-    depends_on:
-      newt:
-        condition: service_started
+#    depends_on:
+#      newt:
+#        condition: service_started
     volumes:
       - ../.volumes/data/registry/data:/var/lib/registry:rw
       - ../.volumes/data/registry/certs:/certs:ro
