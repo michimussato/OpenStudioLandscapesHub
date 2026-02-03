@@ -12,8 +12,8 @@ services:
       - ../.env/pihole.env
     hostname: pihole-unbound
     image: docker.io/mpgirro/pihole-unbound:latest
-    network_mode: host
-    mac_address: 1234deb06b61,  # Random, unique mac address
+#    network_mode: host
+#    mac_address: 1234deb06b61,  # Random, unique mac address
 #    labels:
 #      # Todo
 #      #  - [ ] automatically redirect to /admin
@@ -28,10 +28,10 @@ services:
 #    depends_on:
 #      newt:
 #        condition: service_started
-#    ports:
-#    - "53:53/tcp"
-#    - "53:53/udp"
-#    - "88:80/tcp"  # <-- Leave this one exposed so that we *could* reach this Web UI by <IP>:<PORT>
+    ports:
+    - "53:53/tcp"
+    - "53:53/udp"
+    - "88:80/tcp"  # <-- Leave this one exposed so that we *could* reach this Web UI by <IP>:<PORT>
     restart: unless-stopped
     volumes:
     - ../.volumes/data/pi-hole/etc/pihole:/etc/pihole:rw
