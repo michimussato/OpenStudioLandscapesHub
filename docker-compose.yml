@@ -12,10 +12,10 @@
 
 include:
 
-#  - # Supported Linux OS: amd64, arm64, ppc64el
-#    project_directory: ./guacamole
-#    path:
-#      - ./guacamole/docker-compose.guacamole.yml
+  - # Supported Linux OS: amd64, arm64, ppc64el
+    project_directory: ./guacamole
+    path:
+      - ./guacamole/docker-compose.guacamole.yml
 
   - # Pangolin
     project_directory: ./pangolin
