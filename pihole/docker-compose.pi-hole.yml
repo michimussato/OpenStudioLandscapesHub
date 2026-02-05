@@ -35,7 +35,7 @@ services:
     - "53:53/tcp"
     - "53:53/udp"
     - "88:80/tcp"  # <-- Leave this one exposed so that we *could* reach this Web UI by <IP>:<PORT>
-    restart: unless-stopped
+    restart: always
     volumes:
     - ../.volumes/data/pi-hole/etc/pihole:/etc/pihole:rw
     - ../.volumes/data/pi-hole/etc/dnsmasq.d:/etc/dnsmasq.d:rw

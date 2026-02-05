@@ -5,6 +5,7 @@ services:
   guacamole:
     image: flcontainers/guacamole
     container_name: guacamole
+    restart: always
     depends_on:
       pihole-unbound:
         condition: service_healthy

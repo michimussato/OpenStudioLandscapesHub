@@ -2,7 +2,7 @@ services:
   pangolin:
     image: fosrl/pangolin:latest # https://github.com/fosrl/pangolin/releases
     container_name: pangolin
-    restart: unless-stopped
+    restart: always
     depends_on:
       pihole-unbound:
         condition: service_healthy
@@ -25,7 +25,7 @@ services:
   gerbil:
     image: fosrl/gerbil:latest # https://github.com/fosrl/gerbil/releases
     container_name: gerbil
-    restart: unless-stopped
+    restart: always
     depends_on:
       pangolin:
         condition: service_healthy
@@ -54,7 +54,7 @@ services:
     container_name: traefik
     env_file:
       - ../.env/pangolin.env
-    restart: unless-stopped
+    restart: always
     network_mode: service:gerbil # Ports appear on the gerbil service
     depends_on:
       pangolin:
