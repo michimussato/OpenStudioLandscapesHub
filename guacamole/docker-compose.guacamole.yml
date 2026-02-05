@@ -5,6 +5,9 @@ services:
   guacamole:
     image: flcontainers/guacamole
     container_name: guacamole
+    depends_on:
+      pihole-unbound:
+        condition: service_healthy
 #    networks:
 #      - pangolin
     env_file:

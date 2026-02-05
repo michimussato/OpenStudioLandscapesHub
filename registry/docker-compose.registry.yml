@@ -4,6 +4,9 @@ services:
     hostname: registry
     restart: always
     image: docker.io/registry:3
+    depends_on:
+      pihole-unbound:
+        condition: service_healthy
 #    labels:
 #      - pangolin.proxy-resources.registry.name=Registry
 #      - pangolin.proxy-resources.registry.full-domain=registry.pangolin.openstudiolandscapes.cloud-ip.cc
@@ -13,7 +16,9 @@ services:
 #      - pangolin.proxy-resources.registry.targets[0].hostname=registry
 #      - pangolin.proxy-resources.registry.targets[0].port=5000
 #    depends_on:
-#      newt:
+##      newt:
+##        condition: service_started
+#      pihole-unbound:
 #        condition: service_started
     volumes:
       - ../.volumes/data/registry/data:/var/lib/registry:rw

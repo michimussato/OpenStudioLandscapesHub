@@ -3,6 +3,9 @@ services:
     image: fosrl/pangolin:latest # https://github.com/fosrl/pangolin/releases
     container_name: pangolin
     restart: unless-stopped
+    depends_on:
+      pihole-unbound:
+        condition: service_healthy
     volumes:
       # https://docs.pangolin.net/self-host/manual/docker-compose#file-structure
       - ../.volumes/config/pangolin/:/app/config/

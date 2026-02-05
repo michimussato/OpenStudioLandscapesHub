@@ -3,6 +3,9 @@ services:
     container_name: portainer
     image: docker.io/portainer/portainer-ce:lts
     hostname: portainer
+    depends_on:
+      pihole-unbound:
+        condition: service_healthy
 #    labels:
 #      - pangolin.proxy-resources.portainer.name=Portainer
 #      - pangolin.proxy-resources.portainer.full-domain=portainer.pangolin.openstudiolandscapes.cloud-ip.cc
