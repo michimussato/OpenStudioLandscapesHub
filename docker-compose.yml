@@ -32,10 +32,10 @@ include:
     path:
       - ./portainer/docker-compose.portainer.yml
 
-#  - # Registry
-#    project_directory: ./registry
-#    path:
-#      - ./registry/docker-compose.registry.yml
+  - # Registry
+    project_directory: ./registry
+    path:
+      - ./registry/docker-compose.registry.yml
 
 
 #services:
