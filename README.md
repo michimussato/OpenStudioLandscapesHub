@@ -50,6 +50,7 @@ Services provided:
   - [With Registry UI](https://hub.docker.com/r/joxit/docker-registry-ui)
 - [Portainer](portainer/README.md)
 - [Apache Guacamole (Multi-Arch)](guacamole/README.md)
+- [ntfy.sh](ntfy/README.md)
 
 ## Requirements
 
@@ -104,6 +105,7 @@ flowchart TB
                     portainer["`Portainer`"]
                     registry["`Registry`"]
                     registry-ui["`Registry UI`"]
+                    ntfy["`ntfy.sh`"]
                 end
                 
             end
@@ -123,6 +125,7 @@ flowchart TB
     pangolin ----> portainer
     pangolin ----> registry-ui
     pangolin ----> pihole
+    pangolin ----> ntfy
     registry-ui --> registry
     port_5000 o-- 5000 --o registry
     portainer o---o docker_sock

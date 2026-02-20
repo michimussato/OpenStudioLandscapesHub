@@ -37,6 +37,11 @@ include:
     path:
       - ./registry/docker-compose.registry.yml
 
+  - # Registry
+    project_directory: ./ntfy
+    path:
+      - ./registry/docker-compose.ntfy.yml
+
 
 #services:
 #  newt:
