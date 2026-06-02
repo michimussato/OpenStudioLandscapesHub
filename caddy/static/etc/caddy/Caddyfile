@@ -1,0 +1,31 @@
+{
+    auto_https off
+}
+
+memoriaworks.com {
+    redir https://www.localhost{uri} permanent
+}
+
+www.memoriaworks.com {
+
+    root * /html
+
+    file_server {
+        browse
+    }
+
+    # handle_errors 404 {
+    #     rewrite * /404.html
+    #     file_server
+    # }
+
+    # handle_errors 5xx {
+    #     rewrite * /5xx.html
+    #     file_server
+    # }
+
+    # handle_errors {
+    #     respond "It's a different error"
+    # }
+
+}

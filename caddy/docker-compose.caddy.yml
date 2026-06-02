@@ -1,0 +1,15 @@
+services:
+  caddy:
+    image: docker.io/caddy:2.8.4
+    container_name: caddy
+    restart: unless-stopped
+    environment:
+      - TZ=UTC
+    ports:
+      - "81:80"
+      - "444:443"
+    volumes:
+      - ./static/etc/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./static/html:/html:ro
+      - ../.volumes/caddy/data:/data:rw
+      - ../.volumes/caddy/config:/config:rw
