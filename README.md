@@ -1,165 +1,89 @@
-[![ Logo OpenStudioLandscapes ](https://github.com/michimussato/OpenStudioLandscapes/raw/main/media/images/logo128.png)](https://github.com/michimussato/OpenStudioLandscapes)
+![Memoria Works](https://avatars.githubusercontent.com/u/286479285?s=200)
 
 ---
 
 <!-- TOC -->
 * [OpenStudioLandscapesHub](#openstudiolandscapeshub)
-  * [Requirements](#requirements)
-  * [Up](#up)
-  * [Topology Concept](#topology-concept)
-  * [DNS](#dns)
-    * [Zone File Example for mydomain.com](#zone-file-example-for-mydomaincom)
+  * [gh Client](#gh-client)
+    * [Login](#login)
+  * [git-crypt](#git-crypt)
+    * [Install](#install)
+    * [Encrypt Repo](#encrypt-repo)
+    * [Decrypt Repo](#decrypt-repo)
 <!-- TOC -->
 
 ---
 
 # OpenStudioLandscapesHub
 
-> [!WARNING]
+> [!TIP]
 > 
-> This is a work in progress concept. The provided setup
-> is functional but might need some manual configuration and tweaking.
-> This guide will improve over time. Once it's consiered finished,
-> this warning will be removed.
-
-This is a basic Docker Compose setup to provide distributed teams (remote workers)
-access to your resources created with [OpenStudioLandscapes](https://github.com/michimussato/OpenStudioLandscapes).
-
-> [!NOTE]
+> This repository contains sensitive data. Sensitive
+> data is encrypted using `git-crypt`.
 > 
-> As long as you're running
-> [OpenStudioLandscapes](https://github.com/michimussato/OpenStudioLandscapes) 
-> on a single, isolated machine, embedding Landscapes into a 
-> network infrastructure is not generally needed. 
+> Resources:
+> - [git-crypt - transparent file encryption in git](https://www.agwa.name/projects/git-crypt/)
+> - [Github](https://github.com/AGWA/git-crypt)
+>
+> Files and folder which are prefixed with
+> `__SECRET__` will be transparently encrypted when pushed
+> to the remote (see `.gitattributes` file).
+> 
+> When cloning this repository, a key is required to unlock
+> and decrypt encrypted files. To do so, follow the following
+> steps:
+> 1. `git clone <this_repository>`
+> 2. `cd <this_repository>`
+> 3. `git-crypt unlock <path_to_key_file>`
+> 
+> `git-crypt` binaries for Windows not (as of latest version `0.8`)
+> provided by the maintainer and have to be built individually. 
+> Here's a guide for 
+> [Windows](https://www.geeksforgeeks.org/git/how-to-install-git-crypt-on-windows/):
 
-As soon as multiple machines are involved (for example workers in a render farm or 
-remote collaborators accessing your locally hosted OpenStudioLandscapes 
-resources), things can get complicated pretty quickly in case you
-don't have such a system set up already - like a local DNS server
-for instance.
+## gh Client
 
-OpenStudioLandscapesHub provides a basic selection of services that
-enable a scalable OpenStudioLandscapes environment. A core system
-of this Hub is [Pangolin](https://docs.pangolin.net/). It's open source and free (when hosted
-locally).
-
-Services provided:
-- [Pangolin](pangolin/README.md)
-- [Pi-Hole (DNS)](pihole/README.md)
-- [Docker Registry](registry/README.md)
-  - [With Registry UI](https://hub.docker.com/r/joxit/docker-registry-ui)
-- [Portainer](portainer/README.md)
-- [Apache Guacamole (Multi-Arch)](guacamole/README.md)
-- [ntfy.sh](ntfy/README.md)
-
-## Requirements
-
-- `docker` ([Setup Guide](https://docs.docker.com/engine/install/))
-- [Domain](#dns)
-
-## Up
+References:
+- [Installing gh on Linux and BSD](https://github.com/cli/cli/blob/trunk/docs/install_linux.md#debian)
 
 ```shell
-docker compose \
-    --file docker-compose.yml \
-    --project-name openstudiolandscapes-hub \
-    up \
-    --remove-orphans \
-    --detach
+(type -p wget >/dev/null || (sudo apt update && sudo apt install wget -y)) \
+	&& sudo mkdir -p -m 755 /etc/apt/keyrings \
+	&& out=$(mktemp) && wget -nv -O$out https://cli.github.com/packages/githubcli-archive-keyring.gpg \
+	&& cat $out | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null \
+	&& sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg \
+	&& sudo mkdir -p -m 755 /etc/apt/sources.list.d \
+	&& echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
+	&& sudo apt update \
+	&& sudo apt install gh -y
 ```
 
-## Topology Concept
+### Login
 
-```mermaid
----
-config:
-  flowchart:
-    htmlLabels: false
----
-flowchart TB
-    wan(("`WAN`"))
-    %%newLines["`Line1
-    %%Line 2
-    %%Line 3`"]
-    subgraph "LAN"
-        direction TB
-        router(("`Router/Firewall`"))
-        subgraph "OpenStudioLandscapesHub Host" 
-
-            subgraph "docker-compose.yml" 
-                direction TB
-                
-                subgraph "Exposed Ports"
-                    direction TB
-                    %%port_53(("53"))
-                    port_80(("80"))
-                    port_443(("443"))
-                    %%port_5000(("5000"))
-                end
-                
-                subgraph "Docker Compose Network" 
-                    direction TB
-                    caddy["`Caddy`"]
-                    pangolin["`Pangolin`"]
-                    %%guacamole["`Guacamole`"]
-                    %%pihole["`Pihole (DNS)`"]
-                    portainer["`Portainer`"]
-                    %%registry["`Registry`"]
-                    %%registry-ui["`Registry UI`"]
-                    %%ntfy["`ntfy.sh`"]
-                    memoriaworks_com("memoriaworks.com")
-                    www_memoriaworks_com("www.memoriaworks.com")
-                    intra_memoriaworks_com("intra.memoriaworks.com")
-                    _intra_memoriaworks_com("*.intra.memoriaworks.com")
-                end
-                
-            end
-        docker_sock(("`Docker Socket`"))
-        ssh(("`SSH`"))
-        end
-    end
-    
-    wan -- memoriaworks.com --> router
-    %%router -- 53 --> port_53
-    router -- 80 --> port_80
-    router -- 443 --> port_443
-    %%router -- 5000 --> port_5000
-    router -- 41937 ---------> ssh
-    
-    port_80 o-- 80 --o caddy
-    port_443 o-- 443 --o caddy
-    
-    caddy --> memoriaworks_com
-    caddy --> www_memoriaworks_com
-    caddy --> intra_memoriaworks_com
-    caddy --> _intra_memoriaworks_com
-    _intra_memoriaworks_com --> pangolin
-    memoriaworks_com --> www_memoriaworks_com
-    intra_memoriaworks_com --> pangolin
-    
-    %%port_53 o-- 53 --o pihole
-    %%pangolin ----> guacamole
-    pangolin ---> portainer
-    %%pangolin ----> registry-ui
-    %%pangolin ----> pihole
-    %%pangolin ----> ntfy
-    %%registry-ui --> registry
-    %%port_5000 o-- 5000 --o registry
-    portainer o---o docker_sock
+```shell
+gh auth login
 ```
 
-## DNS
+## git-crypt
 
-DNS-01 Challenge needs API access.
+### Install
 
-### Zone File Example for mydomain.com
-
+```shell
+sudo apt-get update
+sudo apt-get install -y git-crypt
 ```
-$ORIGIN mydomain.com.
-@	3600	IN	SOA	[...]
-@	3600	IN	NS	[ns1].
-@	3600	IN	NS	[ns2].
-@	3600	IN	A	<MY_PUBLIC_IP>
-pangolin	3600	IN	CNAME	mydomain.com.
-*.pangolin	3600	IN	CNAME	pangolin.mydomain.com.
+
+### Encrypt Repo
+
+```shell
+git-crypt init
+git-crypt export-key ~/memoriaworks-studio_OpenStudioLandscapesHub.key
+```
+
+### Decrypt Repo
+
+```shell
+git clone https://github.com/memoriaworks-studio/OpenStudioLandscapesHub.git
+cd OpenStudioLandscapesHub
+git-crypt unlock ~/memoriaworks-studio_OpenStudioLandscapesHub.key
 ```
