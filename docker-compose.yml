@@ -14,35 +14,35 @@
 
 include:
 
-  - # Supported Linux OS: amd64, arm64, ppc64el
-    project_directory: ./guacamole
-    path:
-      - ./guacamole/docker-compose.guacamole.yml
+  # - # Supported Linux OS: amd64, arm64, ppc64el
+  #   project_directory: ./guacamole
+  #   path:
+  #     - ./guacamole/docker-compose.guacamole.yml
 
   - # Pangolin
     project_directory: ./pangolin
     path:
       - ./pangolin/docker-compose.pangolin.yml
 
-  - # Pihole
-    project_directory: ./pihole
-    path:
-      - ./pihole/docker-compose.pi-hole.yml
+  # - # Pihole
+  #   project_directory: ./pihole
+  #   path:
+  #     - ./pihole/docker-compose.pi-hole.yml
 
-  - # Portainer
-    project_directory: ./portainer
-    path:
-      - ./portainer/docker-compose.portainer.yml
+  # - # Portainer
+  #   project_directory: ./portainer
+  #   path:
+  #     - ./portainer/docker-compose.portainer.yml
 
-  - # Registry
-    project_directory: ./registry
-    path:
-      - ./registry/docker-compose.registry.yml
+  # - # Registry
+  #   project_directory: ./registry
+  #   path:
+  #     - ./registry/docker-compose.registry.yml
 
-  - # Registry
-    project_directory: ./ntfy
-    path:
-      - ./registry/docker-compose.ntfy.yml
+  # - # Registry
+  #   project_directory: ./ntfy
+  #   path:
+  #     - ./registry/docker-compose.ntfy.yml
 
 
 #services:

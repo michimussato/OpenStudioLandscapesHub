@@ -91,43 +91,60 @@ flowchart TB
                 
                 subgraph "Exposed Ports"
                     direction TB
-                    port_53(("53"))
+                    %%port_53(("53"))
                     port_80(("80"))
                     port_443(("443"))
-                    port_5000(("5000"))
+                    %%port_5000(("5000"))
                 end
                 
                 subgraph "Docker Compose Network" 
                     direction TB
+                    caddy["`Caddy`"]
                     pangolin["`Pangolin`"]
-                    guacamole["`Guacamole`"]
-                    pihole["`Pihole (DNS)`"]
+                    %%guacamole["`Guacamole`"]
+                    %%pihole["`Pihole (DNS)`"]
                     portainer["`Portainer`"]
-                    registry["`Registry`"]
-                    registry-ui["`Registry UI`"]
-                    ntfy["`ntfy.sh`"]
+                    %%registry["`Registry`"]
+                    %%registry-ui["`Registry UI`"]
+                    %%ntfy["`ntfy.sh`"]
+                    memoriaworks_com("memoriaworks.com")
+                    www_memoriaworks_com("www.memoriaworks.com")
+                    intra_memoriaworks_com("intra.memoriaworks.com")
+                    _intra_memoriaworks_com("*.intra.memoriaworks.com")
                 end
                 
             end
         docker_sock(("`Docker Socket`"))
+        ssh(("`SSH`"))
         end
     end
     
-    wan -- example.com --> router
-    router -- 53 --> port_53
+    wan -- memoriaworks.com --> router
+    %%router -- 53 --> port_53
     router -- 80 --> port_80
     router -- 443 --> port_443
-    router -- 5000 --> port_5000
-    port_53 o-- 53 --o pihole
-    port_80 o-- 80 --o pangolin
-    port_443 o-- 443 --o pangolin
-    pangolin ----> guacamole
-    pangolin ----> portainer
-    pangolin ----> registry-ui
-    pangolin ----> pihole
-    pangolin ----> ntfy
-    registry-ui --> registry
-    port_5000 o-- 5000 --o registry
+    %%router -- 5000 --> port_5000
+    router -- 41937 ---------> ssh
+    
+    port_80 o-- 80 --o caddy
+    port_443 o-- 443 --o caddy
+    
+    caddy --> memoriaworks_com
+    caddy --> www_memoriaworks_com
+    caddy --> intra_memoriaworks_com
+    caddy --> _intra_memoriaworks_com
+    _intra_memoriaworks_com --> pangolin
+    memoriaworks_com --> www_memoriaworks_com
+    intra_memoriaworks_com --> pangolin
+    
+    %%port_53 o-- 53 --o pihole
+    %%pangolin ----> guacamole
+    pangolin ---> portainer
+    %%pangolin ----> registry-ui
+    %%pangolin ----> pihole
+    %%pangolin ----> ntfy
+    %%registry-ui --> registry
+    %%port_5000 o-- 5000 --o registry
     portainer o---o docker_sock
 ```
 
