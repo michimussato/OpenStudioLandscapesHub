@@ -13,10 +13,10 @@ __pycache__/*
 .*.swp
 */.ipynb_checkpoints/*
 .DS_Store
-*.env
+#*.env
 # Include all env files in ./.env/
-!.env/
-!.env/template.*.env
+#!.env/
+#!.env/*.env
 
 # Project files
 .ropeproject
@@ -58,5 +58,7 @@ MANIFEST
 .conda*/
 .python-version
 
-# Ignore data volumes
-.volumes/data
+# Obsidian
+.obsidian/hotkeys.json
+.obsidian/workspace.json
+.obsidian/workspaces.json
