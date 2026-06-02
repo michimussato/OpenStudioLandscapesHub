@@ -19,10 +19,17 @@ include:
   #   path:
   #     - ./guacamole/docker-compose.guacamole.yml
 
+  - # Caddy
+    project_directory: ./caddy
+    path:
+      - ./caddy/docker-compose.caddy.yml
+
   - # Pangolin
     project_directory: ./pangolin
     path:
       - ./pangolin/docker-compose.pangolin.yml
+    env_file:
+      - ./__SECRET__.env/pangolin.env
 
   # - # Pihole
   #   project_directory: ./pihole
