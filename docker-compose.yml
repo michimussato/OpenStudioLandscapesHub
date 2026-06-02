@@ -23,6 +23,15 @@ include:
     project_directory: ./caddy
     path:
       - ./caddy/docker-compose.caddy.yml
+    env_file:
+      - ./__SECRET__.env/caddy.env
+
+  - # Cloudflare DDNS
+    project_directory: ./cloudflare-ddns
+    path:
+      - ./cloudflare-ddns/docker-compose.cloudflare-ddns.yml
+    # env_file:
+    #   - ./__SECRET__.env/caddy.env
 
   - # Pangolin
     project_directory: ./pangolin

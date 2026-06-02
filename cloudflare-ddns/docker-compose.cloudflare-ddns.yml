@@ -1,0 +1,20 @@
+services:
+  cloudflare-ddns:
+    container_name: memoriaworks-cloudflare-ddns
+    hostname: memoriaworks-cloudflare-ddns
+    domainname: memoriaworks.com
+    image: docker.io/timothyjmiller/cloudflare-ddns:latest
+    # Docker requires network_mode: host to access the IPv6 public address.
+    network_mode: host
+    restart: unless-stopped
+#    env_file:
+#      - ../.env/cloudflare-ddns.env
+    security_opt:
+      - no-new-privileges:true
+    # Todo:
+    #  - [ ] config.json is for backwards
+    #        compatibility. Replace with
+    #        environment or env_file
+    #        - https://hub.docker.com/r/timothyjmiller/cloudflare-ddns#-all-environment-variables
+    volumes:
+      - ./static/__SECRET__config.json:/config.json
