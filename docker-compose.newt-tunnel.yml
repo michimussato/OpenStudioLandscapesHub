@@ -13,12 +13,12 @@ include:
   #     - ./transmission/docker-compose.yml
   #   # env_file:
   #   #   - .env/transmission.env
-  # # filebrowser
-  # - project_directory: ./filebrowser
-  #   path:
-  #     - ./filebrowser/docker-compose.yml
-  #   # env_file:
-  #   #   - .env/filebrowser.env
+  # filebrowser
+  - project_directory: ./filebrowser
+    path:
+      - ./filebrowser/docker-compose.yml
+    # env_file:
+    #   - .env/filebrowser.env
   # # Jellyfin
   # - project_directory: ./jellyfin
   #   path:

@@ -7,9 +7,9 @@ services:
     restart: unless-stopped
     depends_on:
       - newt
-    ports:
-      - "88:80"
-      - "89:81"
+    # ports:
+    #   - "88:80"
+    #   - "89:81"
     # #  - "443:443"
     volumes:
       - ./static/etc/caddy/Caddyfile:/etc/caddy/Caddyfile:ro

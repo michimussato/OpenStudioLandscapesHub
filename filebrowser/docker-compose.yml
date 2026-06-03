@@ -1,0 +1,45 @@
+services:
+  filebrowser:
+    container_name: filebrowser
+    hostname: filebrowser
+    image: docker.io/filebrowser/filebrowser
+    depends_on:
+      newt:
+        condition: service_started
+#    labels:
+#      - pangolin.proxy-resources.filebrowser.name=filebrowser
+#      - pangolin.proxy-resources.filebrowser.full-domain=filebrowser.pangolin.openstudiolandscapes.cloud-ip.cc
+#      - pangolin.proxy-resources.filebrowser.protocol=http
+#      - pangolin.proxy-resources.filebrowser.auth.sso-enabled=true
+#      - pangolin.proxy-resources.filebrowser.targets[0].method=http
+#      - pangolin.proxy-resources.filebrowser.targets[0].hostname=filebrowser
+#      - pangolin.proxy-resources.filebrowser.targets[0].port=80
+    env_file:
+      - ../__SECRET__.env/filebrowser.env
+    command:
+      - --database
+      - /database/filebrowser.db
+      - --noauth
+      # - --username
+      # - openstudiolandscapes
+      # - --password
+      # - $$2a$$10$$IgDJSu69ZL2YBDClnawjruQFpZraoBUc.Vt/nx.TgwK3Ut25IF/K2
+      - --root
+      - /shared
+      - --port
+      - '80'
+      - --baseURL
+      - ''
+      - --address
+      - ''
+      - --log
+      - stdout
+    # ports:
+    #   # 80 used by docker-compose.yml container
+    #   - "8181:80"
+    restart: unless-stopped
+    volumes:
+      # Todo
+      #  - [ ] replace settings.json with command flags
+      # - ../.volumes/jellyfin/media:/media:rw
+      - /srv/downloads:/shared

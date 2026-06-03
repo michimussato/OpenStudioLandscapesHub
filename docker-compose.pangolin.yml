@@ -6,6 +6,6 @@
 include:
   - project_directory: ./pangolin
     path:
-      - ./pangolin/docker-compose.pangolin.yml
+      - ./pangolin/docker-compose.yml
     env_file:
       - ./__SECRET__.env/pangolin.env
