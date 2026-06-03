@@ -10,6 +10,7 @@
   * [Firewall](#firewall)
   * [Site](#site)
   * [Proxy Blueprints](#proxy-blueprints)
+  * [Reset](#reset)
 <!-- TOC -->
 
 ---
@@ -152,3 +153,12 @@ networks:
 ```
 
 to the `newt` service.
+
+
+## Reset
+
+```shell
+sudo rm ~/git/repos/OpenStudioLandscapesHub/.volumes/pangolin/__SECRET__config/key
+sudo rm ~/git/repos/OpenStudioLandscapesHub/.volumes/pangolin/__SECRET__config/db/db.sqlite
+sudo rm ~/git/repos/OpenStudioLandscapesHub/.volumes/pangolin/__SECRET__config/letsencrypt/*.json
+```

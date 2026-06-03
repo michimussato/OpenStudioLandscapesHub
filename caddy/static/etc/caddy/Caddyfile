@@ -1,38 +1,24 @@
 {
-    auto_https off
+    auto_https off  # Pangolin takes care of SSL encryption
+    debug
 }
 
-tls {
-	dns cloudflare {
-		zone_token {env.CF_ZONE_TOKEN}
-		api_token {env.CF_API_TOKEN}
-	}
-}
+:80 {
 
-memoriaworks.com {
-    redir https://www.localhost{uri} permanent
-}
-
-www.memoriaworks.com {
-
-    root * /html
+    root * /html/www.memoriaworks.com
 
     file_server {
         browse
     }
 
-    # handle_errors 404 {
-    #     rewrite * /404.html
-    #     file_server
-    # }
+}
 
-    # handle_errors 5xx {
-    #     rewrite * /5xx.html
-    #     file_server
-    # }
+:81 {
 
-    # handle_errors {
-    #     respond "It's a different error"
-    # }
+    root * /html/intra.memoriaworks.com
+
+    file_server {
+        browse
+    }
 
 }

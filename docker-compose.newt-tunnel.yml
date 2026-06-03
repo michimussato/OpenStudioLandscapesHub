@@ -1,0 +1,108 @@
+# /usr/bin/docker compose --progress plain --file docker-compose.newt-tunnel.yml --project-name memoriaworks-services up --pull always --remove-orphans --detach
+# /usr/bin/docker compose --progress plain --file docker-compose.newt-tunnel.yml --project-name memoriaworks-services down
+
+# docker compose --progress plain --file docker-compose.newt-tunnel.yml --project-name pangolin-newt-tunnel pull
+# docker compose --progress plain --file docker-compose.newt-tunnel.yml --project-name pangolin-newt-tunnel up --pull always --remove-orphans --detach
+# docker compose --progress plain --file docker-compose.newt-tunnel.yml --project-name pangolin-newt-tunnel down
+
+
+include:
+  # # Transmission
+  # - project_directory: ./transmission
+  #   path:
+  #     - ./transmission/docker-compose.yml
+  #   # env_file:
+  #   #   - .env/transmission.env
+  # # filebrowser
+  # - project_directory: ./filebrowser
+  #   path:
+  #     - ./filebrowser/docker-compose.yml
+  #   # env_file:
+  #   #   - .env/filebrowser.env
+  # # Jellyfin
+  # - project_directory: ./jellyfin
+  #   path:
+  #     - ./jellyfin/docker-compose.yml
+  #   # env_file:
+  #   #   - .env/jellyfin.env
+  # # Pihole
+  # - project_directory: ./pi-hole
+  #   path:
+  #     - ./pi-hole/docker-compose.yml
+  #   # env_file:
+  #   #   - .env/pihole.env
+  # # Registry
+  # - project_directory: ./registry
+  #   path:
+  #     - ./registry/docker-compose.yml
+  #   # env_file:
+  #   #   - .env/registry.env
+  # # Portainer
+  # - project_directory: ./portainer
+  #   path:
+  #     - ./portainer/docker-compose.yml
+  #   # env_file:
+  #   #   - .env/portainer.env
+  # # Guacamole
+  # - project_directory: ./guacamole
+  #   path:
+  #     - ./guacamole/docker-compose.yml
+  #   # env_file:
+  #   #   - .env/guacamole.env
+  # # Syncthing
+  # - project_directory: ./syncthing
+  #   path:
+  #     - ./syncthing/docker-compose.yml
+  #   # env_file:
+  #   #   - .env/syncthing.env
+  # # JDownloader
+  # - project_directory: ./jdownloader
+  #   path:
+  #     - ./jdownloader/docker-compose.yml
+  #   # env_file:
+  #   #   - .env/syncthing.env
+  # netbootxyz
+  # - project_directory: ./netbootxyz
+  #   path:
+  #     - ./netbootxyz/docker-compose.yml
+  #   # env_file:
+  # # ntfy
+  # - project_directory: ./ntfy
+  #   path:
+  #     - ./ntfy/docker-compose.yml
+  #   # env_file:
+  # ntfy
+  - project_directory: ./caddy
+    path:
+      - ./caddy/docker-compose.yml
+    # env_file:
+    #   - ./__SECRET__.env/caddy.env
+#  # ntfy
+#  - project_directory: ./loggifly
+#    path:
+#      - ./loggifly/docker-compose.yml
+#    # env_file:
+
+
+services:
+  newt:
+    image: fosrl/newt
+    container_name: newt
+    restart: unless-stopped
+    env_file:
+      - ./__SECRET__.env/newt.env
+    #############################################
+    # Leave this intact
+    environment:
+      # - PANGOLIN_ENDPOINT=${PANGOLIN_ENDPOINT}
+      # - NEWT_ID=${NEWT_ID}
+      # - NEWT_SECRET=${NEWT_SECRET}
+      # - DISABLE_CLIENTS=${DISABLE_CLIENTS}
+      - DOCKER_SOCKET=/var/run/docker.sock
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    #############################################
+
+networks:
+  default:
+    name: pangolin_default

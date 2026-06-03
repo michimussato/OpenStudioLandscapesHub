@@ -1,0 +1,11 @@
+# /usr/bin/docker compose --progress plain --file docker-compose.pangolin.yml --project-name memoriaworks-pangolin up --pull always --remove-orphans --detach
+# /usr/bin/docker compose --progress plain --file docker-compose.pangolin.yml --project-name memoriaworks-pangolin down
+
+# Use include to modularize Compose files
+# https://docs.docker.com/reference/compose-file/include/
+include:
+  - project_directory: ./pangolin
+    path:
+      - ./pangolin/docker-compose.pangolin.yml
+    env_file:
+      - ./__SECRET__.env/pangolin.env

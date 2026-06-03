@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Memoria Works Intranet</title>
+        <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap"
+              rel="stylesheet">
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box
+            }
+
+            body {
+                font-family: "DM Sans", sans-serif;
+                background: #0a0a0b;
+                color: #e8e6e3;
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: relative;
+                overflow: hidden
+            }
+
+            body::before {
+                content: "";
+                position: absolute;
+                top: -50%;
+                left: -50%;
+                width: 200%;
+                height: 200%;
+                background: radial-gradient(ellipse at 30% 20%, rgba(99, 102, 241, .06) 0%, transparent 50%), radial-gradient(ellipse at 70% 80%, rgba(168, 85, 247, .04) 0%, transparent 50%);
+                pointer-events: none
+            }
+
+            .c {
+                position: relative;
+                z-index: 1;
+                text-align: center;
+                padding: 3rem;
+                max-width: 960px
+            }
+
+            .logo {
+                font-family: "DM Mono", monospace;
+                font-size: .75rem;
+                font-weight: 500;
+                letter-spacing: .3em;
+                text-transform: uppercase;
+                color: #6366f1;
+                margin-bottom: 1rem
+            }
+
+            h1 {
+                font-size: 2.5rem;
+                font-weight: 700;
+                letter-spacing: -.02em;
+                margin-bottom: .5rem;
+                background: linear-gradient(135deg, #e8e6e3 0%, #a8a5a0 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text
+            }
+
+            .sub {
+                font-size: .95rem;
+                color: #5a5856;
+                margin-bottom: 3.5rem
+            }
+
+            .tools {
+                display: flex;
+                gap: 1.25rem;
+                justify-content: center;
+                flex-wrap: wrap;
+                margin-bottom: 1.25rem;
+                max-width: 830px;
+                margin-left: auto;
+                margin-right: auto
+            }
+
+            .t {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: .75rem;
+                padding: 1.75rem 2rem;
+                flex: 1 1 220px;
+                max-width: 260px;
+                min-width: 200px;
+                background: rgba(255, 255, 255, .03);
+                border: 1px solid rgba(255, 255, 255, .06);
+                border-radius: 12px;
+                text-decoration: none;
+                color: inherit;
+                transition: all .2s ease
+            }
+
+            .t:hover {
+                background: rgba(255, 255, 255, .06);
+                border-color: rgba(99, 102, 241, .3);
+                transform: translateY(-2px)
+            }
+
+            .ic {
+                width: 40px;
+                height: 40px;
+                border-radius: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: center
+            }
+
+            .ic.r {
+                background: rgba(99, 102, 241, .12);
+                color: #818cf8
+            }
+
+            .ic.v {
+                background: rgba(168, 85, 247, .12);
+                color: #c084fc
+            }
+
+            .ic.f {
+                background: rgba(34, 197, 94, .12);
+                color: #4ade80
+            }
+
+            .ic.g {
+                background: rgba(251, 191, 36, .12);
+                color: #fbbf24
+            }
+
+            .ic.k {
+                background: rgba(236, 72, 153, .12);
+                color: #f472b6
+            }
+
+            .tn {
+                font-size: 1.15rem;
+                font-weight: 600
+            }
+
+            .td {
+                font-size: .8rem;
+                color: #5a5856;
+                line-height: 1.4
+            }
+
+            .repos {
+                text-align: left;
+                background: rgba(255, 255, 255, .02);
+                border: 1px solid rgba(255, 255, 255, .05);
+                border-radius: 12px;
+                padding: 1.5rem 2rem;
+                margin: 0 auto;
+                max-width: 640px
+            }
+
+            .repos-title {
+                font-family: "DM Mono", monospace;
+                font-size: .7rem;
+                font-weight: 500;
+                letter-spacing: .2em;
+                text-transform: uppercase;
+                color: #5a5856;
+                margin-bottom: 1rem
+            }
+
+            .repo-row {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 1rem;
+                padding: .6rem 0
+            }
+
+            .repo-row + .repo-row {
+                border-top: 1px solid rgba(255, 255, 255, .04)
+            }
+
+            .repo-label {
+                font-size: .8rem;
+                font-weight: 600;
+                color: #a8a5a0;
+                min-width: 50px
+            }
+
+            .repo-url {
+                font-family: "DM Mono", monospace;
+                font-size: .75rem;
+                color: #6366f1;
+                background: rgba(99, 102, 241, .08);
+                padding: .35rem .7rem;
+                border-radius: 6px;
+                flex: 1;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                user-select: all
+            }
+
+            .repo-copy {
+                background: none;
+                border: 1px solid rgba(255, 255, 255, .1);
+                border-radius: 6px;
+                color: #5a5856;
+                cursor: pointer;
+                padding: .3rem .6rem;
+                font-family: "DM Mono", monospace;
+                font-size: .65rem;
+                letter-spacing: .05em;
+                transition: all .15s ease;
+                white-space: nowrap
+            }
+
+            .repo-copy:hover {
+                border-color: rgba(99, 102, 241, .4);
+                color: #818cf8
+            }
+
+            .repo-copy.ok {
+                border-color: rgba(34, 197, 94, .4);
+                color: #4ade80
+            }
+
+            .repo-note {
+                font-size: .7rem;
+                color: #3a3836;
+                margin-top: .75rem;
+                font-style: italic
+            }
+
+            .ft {
+                position: fixed;
+                bottom: 1.5rem;
+                left: 0;
+                right: 0;
+                text-align: center;
+                font-family: "DM Mono", monospace;
+                font-size: .65rem;
+                color: #2a2928;
+                letter-spacing: .1em
+            }
+        </style>
+    </head>
+    <body>
+    <div class="c">
+        <div class="logo">Memoria Works</div>
+        <h1>Intranet</h1>
+        <p class="sub">Internal tools and services</p>
+        <div class="tools">
+            <a href="/repo/" class="t">
+                <div class="ic r">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                         stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="18" cy="18" r="3"/>
+                        <circle cx="6" cy="6" r="3"/>
+                        <path d="M13 6h3a2 2 0 0 1 2 2v7"/>
+                        <path d="M6 9v12"/>
+                    </svg>
+                </div>
+                <span class="tn">Repository</span><span class="td">Browse source code, revisions, and diffs</span></a>
+            <a href="/review/" class="t">
+                <div class="ic v">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                         stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                        <polyline points="14 2 14 8 20 8"/>
+                        <line x1="16" y1="13" x2="8" y2="13"/>
+                        <line x1="16" y1="17" x2="8" y2="17"/>
+                    </svg>
+                </div>
+                <span class="tn">Review Board</span><span class="td">Code reviews and change requests</span></a>
+            <a href="/downloads/" class="t">
+                <div class="ic f">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                         stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="7 10 12 15 17 10"/>
+                        <line x1="12" y1="15" x2="12" y2="3"/>
+                    </svg>
+                </div>
+                <span class="tn">Downloads</span><span class="td">Tools, installers, and releases</span></a>
+            <a href="https://gofile.io" target="_blank" class="t">
+                <div class="ic g">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                         stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
+                        <polyline points="16 6 12 2 8 6"/>
+                        <line x1="12" y1="2" x2="12" y2="15"/>
+                    </svg>
+                </div>
+                <span class="tn">Gofile</span><span class="td">Quick file sharing with external people</span></a>
+            <a href="https://app.clickup.com/90152125381/home" target="_blank" class="t">
+                <div class="ic k">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                         stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/>
+                        <rect x="9" y="3" width="6" height="4" rx="1"/>
+                        <path d="M9 14l2 2 4-4"/>
+                    </svg>
+                </div>
+                <span class="tn">ClickUp</span><span class="td">Project management and team docs</span></a>
+        </div>
+        <div class="repos">
+            <div class="repos-title">Repository Access</div>
+            <div class="repo-row">
+                <span class="repo-label">Game</span>
+                <span class="repo-url" id="url-game">svn+ssh://USERNAME@svn.memoriaworks.com/azura/game/trunk</span>
+                <button class="repo-copy" onclick="copyUrl('url-game',this)">copy</button>
+            </div>
+            <div class="repo-row">
+                <span class="repo-label">Raw</span>
+                <span class="repo-url" id="url-raw">svn+ssh://USERNAME@svn.memoriaworks.com/azura/raw/trunk</span>
+                <button class="repo-copy" onclick="copyUrl('url-raw',this)">copy</button>
+            </div>
+            <p class="repo-note">Replace USERNAME with your system username</p>
+        </div>
+    </div>
+    <div class="ft">memoria works &middot; internal use only</div>
+    <script>
+        function copyUrl(id, btn) {
+            var t = document.getElementById(id).textContent;
+            navigator.clipboard.writeText(t).then(function () {
+                btn.textContent = 'copied';
+                btn.classList.add('ok');
+                setTimeout(function () {
+                    btn.textContent = 'copy';
+                    btn.classList.remove('ok')
+                }, 1500);
+            });
+        }
+    </script>
+    </body>
+</html>

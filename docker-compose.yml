@@ -22,7 +22,7 @@ include:
   - # Caddy
     project_directory: ./caddy
     path:
-      - ./caddy/docker-compose.caddy.yml
+      - ./caddy/docker-compose.yml
     env_file:
       - ./__SECRET__.env/caddy.env
 
