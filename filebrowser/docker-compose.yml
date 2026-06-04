@@ -18,11 +18,11 @@ services:
       - --database
       - /database/filebrowser.db
       - --username
-      - ${ADMIN_USER}
+      - ${DEFAULT_ADMIN_USER}
       # How to hash a password:
       # See https://github.com/michimussato/OpenStudioLandscapes-filebrowser/blob/fe20feaaff11a25dbed3387cfbe963b7f49427a7/src/OpenStudioLandscapes/filebrowser/config/models.py#L91
       - --password
-      - ${ADMIN_PASSWORD_HASHED}
+      - ${DEFAULT_ADMIN_PASSWORD_HASHED}
       - --root
       - /shared
       - --port
@@ -44,4 +44,4 @@ services:
       #  - [ ] replace settings.json with command flags
       # - ../.volumes/jellyfin/media:/media:rw
       - /srv/downloads:/shared
-      # - ../.volumes/filebrowser/filebrowser_db:/database
+      - ../.volumes/filebrowser/filebrowser_db:/database
