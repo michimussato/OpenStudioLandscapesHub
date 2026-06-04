@@ -17,6 +17,8 @@ include:
   - project_directory: ./filebrowser
     path:
       - ./filebrowser/docker-compose.yml
+    env_file:
+      - ./__SECRET__.env/filebrowser.env
     # env_file:
     #   - .env/filebrowser.env
   # # Jellyfin

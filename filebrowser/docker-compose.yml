@@ -14,24 +14,25 @@ services:
 #      - pangolin.proxy-resources.filebrowser.targets[0].method=http
 #      - pangolin.proxy-resources.filebrowser.targets[0].hostname=filebrowser
 #      - pangolin.proxy-resources.filebrowser.targets[0].port=80
-    env_file:
-      - ../__SECRET__.env/filebrowser.env
     command:
       - --database
       - /database/filebrowser.db
-      - --noauth
-      # - --username
-      # - openstudiolandscapes
-      # - --password
-      # - $$2a$$10$$IgDJSu69ZL2YBDClnawjruQFpZraoBUc.Vt/nx.TgwK3Ut25IF/K2
+      - --username
+      - ${ADMIN_USER}
+      # How to hash a password:
+      # See https://github.com/michimussato/OpenStudioLandscapes-filebrowser/blob/fe20feaaff11a25dbed3387cfbe963b7f49427a7/src/OpenStudioLandscapes/filebrowser/config/models.py#L91
+      - --password
+      - ${ADMIN_PASSWORD_HASHED}
       - --root
       - /shared
       - --port
       - '80'
       - --baseURL
       - ''
+#      - 'https://filebrowser.intra.memoriaworks.com'
       - --address
       - ''
+      # - '127.0.0.1'
       - --log
       - stdout
     # ports:
@@ -43,3 +44,4 @@ services:
       #  - [ ] replace settings.json with command flags
       # - ../.volumes/jellyfin/media:/media:rw
       - /srv/downloads:/shared
+      # - ../.volumes/filebrowser/filebrowser_db:/database
