@@ -40,8 +40,5 @@ services:
     #   - "8181:80"
     restart: unless-stopped
     volumes:
-      # Todo
-      #  - [ ] replace settings.json with command flags
-      # - ../.volumes/jellyfin/media:/media:rw
-      - /srv/downloads:/shared
+      - ../.volumes/filebrowser/shared:/shared:rw
       - ../.volumes/filebrowser/database/filebrowser.db:/database/filebrowser.db
