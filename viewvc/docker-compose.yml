@@ -1,0 +1,28 @@
+# /usr/bin/docker compose --progress plain --file docker-compose.yml --project-name memoriaworks-viewvc up --pull always --force-recreate --remove-orphans --detach
+# /usr/bin/docker compose --progress plain --file docker-compose.yml --project-name memoriaworks-viewvc down
+
+
+services:
+  viewvc:
+    container_name: viewvc
+    hostname: viewvc
+    image: viewvc:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ../.volumes/viewvc/svn:/srv/svn:rw
+      - ./viewvc/viewvc.conf:/viewvc/viewvc.conf:ro
+    depends_on:
+      newt:
+        condition: service_started
+    command:
+      - --port=49152
+      - --host=0.0.0.0
+      - --script-alias=/
+      # - --repository=/srv/svn/azura/game    # With this option, looks like we can't assign an alias like in the viewvc.conf: game: /srv/svn/azura/game
+      # - --repository=/srv/svn/azura/raw     # With this option, looks like we can't assign an alias like in the viewvc.conf: raw: /srv/svn/azura/raw
+      # - --repository=/srv/svn/azura/engine  # With this option, looks like we can't assign an alias like in the viewvc.conf: engine: /srv/svn/azura/engine
+      # - --config-file=/viewvc/viewvc.conf
+    ports:
+      - "49152:49152"

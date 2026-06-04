@@ -57,6 +57,12 @@ include:
       - ./reviewboard/docker-compose.yml
     # env_file:
     #   - ./__SECRET__.env/reviewboard.env
+  # ViewVC
+  - project_directory: ./viewvc
+    path:
+      - ./viewvc/docker-compose.yml
+    # env_file:
+    #   - ./__SECRET__.env/reviewboard.env
   # # Syncthing
   # - project_directory: ./syncthing
   #   path:
