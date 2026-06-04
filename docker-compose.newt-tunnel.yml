@@ -45,12 +45,12 @@ include:
       - ./portainer/docker-compose.yml
     env_file:
       - ./__SECRET__.env/portainer.env
-  # # Guacamole
-  # - project_directory: ./guacamole
-  #   path:
-  #     - ./guacamole/docker-compose.yml
-  #   # env_file:
-  #   #   - .env/guacamole.env
+  # Guacamole
+  - project_directory: ./guacamole
+    path:
+      - ./guacamole/docker-compose.yml
+    env_file:
+      - ./__SECRET__.env/guacamole.env
   # # Syncthing
   # - project_directory: ./syncthing
   #   path:

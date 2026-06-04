@@ -7,15 +7,17 @@ services:
     container_name: guacamole
     restart: always
     depends_on:
-      pihole-unbound:
-        condition: service_healthy
+      newt:
+        condition: service_started
+      # pihole-unbound:
+      #   condition: service_healthy
 #    networks:
 #      - pangolin
-    env_file:
-      - ../.env/guacamole.env
+    # env_file:
+    #   - ../.env/guacamole.env
     volumes:
-      - ../.volumes/data/guacamole/postgres:/config
-      - ../.volumes/data/guacamole/recordings:/var/lib/guacamole/recordings
+      - ../.volumes/guacamole/postgres:/config
+      - ../.volumes/guacamole/recordings:/var/lib/guacamole/recordings
       - /etc/localtime:/etc/localtime:ro
 #    ports:
 #      - 8080:8080
