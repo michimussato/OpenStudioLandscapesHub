@@ -1,0 +1,44 @@
+# Todo
+#  - [ ] get rid of this nginx instance and have Caddy
+#        handle that for us
+
+services:
+  # The frontend nginx web server.
+  #
+  # This serves up static media (CSS, JavaScript, and images), and forwards
+  # all other requests to the Review Board backend server.
+  #
+  # This is the server you will access for Review Board.
+  reviewboard-nginx:
+    image: docker.io/nginx:alpine
+    container_name: reviewboard-nginx
+    hostname: reviewboard-nginx
+    restart: always
+    depends_on:
+      reviewboard:
+        condition: service_healthy
+      newt:
+        condition: service_started
+
+    environment:
+      # CHANGEME: Set this to your accessible domain name above.
+      - NGINX_HOST=reviewboard.memoriaworks.com
+
+      # The public port used to access this instance.
+      #
+      # If changed, you will need to change 'ports' below to match.
+      - NGINX_PORT=80
+
+    # ports:
+    #   - "77:80"
+
+    volumes:
+      - ../.volumes/reviewboard/reviewboard/site:/var/www/reviewboard
+      - ./static/nginx_templates:/etc/nginx/templates
+
+    # CHANGEME: If you are using /etc/hosts to define a domain name for
+    #           testing, set this to your domain name and uncomment.
+    #networks:
+    #  default:
+    #    aliases:
+    #      - reviewboard.example.com

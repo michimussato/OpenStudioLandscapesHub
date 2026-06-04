@@ -1,0 +1,345 @@
+# Example docker-compose configuration for Review Board on Postgres.
+#
+# Please note, this file is meant to be used as an example! You will need
+# to change some settings first. See the instructions.
+#
+#
+# Instructions
+# ============
+#
+# 1. Copy the following to a new directory:
+#
+#    * docker-compose.yaml (based on this file)
+#    * nginx_templates/
+#    * postgres/
+#
+# 2. Change the hostname below to a fully-qualified domain name you'll be
+#    able to use for the server. Search for "reviewboard.example.com" to find
+#    which instances need to be changed.
+#
+#    See DOMAIN and NGINX_HOST below.
+#
+#    To temporarily test a hostname, you can modify /etc/hosts on Linux
+#    or macOS and alias it to your IP address. If you do this, you will also
+#    need to uncomment the network alias in the nginx container.
+#
+#    NOTE: If you change this later, you will need to edit the sitedir
+#          volume's conf/settings_local.py to include the new hostname in
+#          ALLOWED_HOSTS, and change the hostname in Review Board's
+#          Admin UI -> General Settings page.
+#
+# 3. Change the database passwords below to something secure.
+#
+#    See POSTGRES_PASSWORD, POSTGRES_RB_PASSWORD, and DATABASE_PASSWORD.
+#
+# 4. Change the company name for your server.
+#
+#    See COMPANY below.
+#
+# 5. Go through the optional services and decide which ones to keep.
+#
+#    Any service with "[Optional]" at the beginning of its description is
+#    optional and can be removed if you don't want it.
+#
+# 6. Go through this file and search for "CHANGEME" for other settings you
+#    may want to change.
+#
+# 7. Run: docker-compose up
+#
+# 8. Access http://<hostname>/
+#
+#
+# Data Storage
+# ============
+#
+# This example configuration will create two directories for storage:
+#
+# db_data/
+#     The Postgres database contents.
+#
+#     This CANNOT be shared across multiple Postgres database servers.
+#
+# sitedir/
+#     Review Board site directory content (static media files, data, and
+#     configuration).
+#
+#     This CAN be shared across multiple Review Board server instances, and
+#     Nginx instances.
+#
+#
+# Setting up Document Conversion
+# ==============================
+#
+# The sample configurations include the Document Converter microservice, which
+# is used for reviewing Office documents (included with a Review Board Plus or
+# Enterprise subscription).
+#
+# Once your subscription (or trial) is activated, you can enable the Document
+# Converter by connecting it to the broker:
+#
+# 1. Go to Admin UI -> Document Review
+# 2. Set Broker URL to the same value as the BROKER_URL in the docconverter
+#    container configuration.
+#
+#
+# Production Use
+# ==============
+#
+# As this is only a sample configuration, you'll likely want to make other
+# changes for production use, such as:
+#
+# 1. Setting up a load balancer with SSL enabled.
+#
+# 2. Separating out the database and memcached server for other Review Board
+#    instances to use.
+#
+# 3. Making sure the SSL endpoint is the only exposed port.
+#
+# These are all beyond the scope of this example configuration.
+#
+# You should also go through this file, read the comments, and change any
+# configuration needed for your install.
+
+
+services:
+  # The backend Postgres database server.
+  #
+  # This is accessed directly by Review Board.
+  #
+  # In production, this should be shared across all Review Board instances.
+  reviewboard-db:
+  # reviewboard-db:
+    image: docker.io/postgres:13-alpine
+    hostname: db
+    container_name: db
+    environment:
+      # The Postgres admin username.
+      - POSTGRES_USER=admin
+
+      # The Postgres admin password.
+      #
+      # CHANGEME: Use a strong password!
+      - POSTGRES_PASSWORD=admin123
+
+      # The name of the Postgres database storing Review Board content.
+      - POSTGRES_DB=reviewboard
+
+      # The Postgres username for Review Board.
+      - POSTGRES_RB_USER=reviewboard
+
+      # The Postgres password for Review Board.
+      #
+      # CHANGEME: Use a strong password!
+      - POSTGRES_RB_PASSWORD=reviewboard123
+
+    volumes:
+      - ../.volumes/reviewboard/db/var/lib/postgresql/data/:/var/lib/postgresql/data/
+      - ./static/postgres/init-reviewboard-db.sh:/docker-entrypoint-initdb.d/init-reviewboard-db.sh
+
+    restart: 'on-failure'
+
+
+  # The backend memory caching server.
+  #
+  # This is accessed directly by Review Board.
+  #
+  # In production, this should be shared across all Review Board instances,
+  # and should be configured with at least 2GB of RAM.
+  reviewboard-memcached:
+#  reviewboard-memcached:
+    image: docker.io/memcached:alpine
+    restart: 'on-failure'
+    hostname: memcached
+    container_name: memcached
+
+    entrypoint:
+      - memcached
+
+      # The amount of RAM available for memcached.
+      #
+      # CHANGEME: Set this to a suitable amount for your server. We recommend
+      #           at least 2GB in production (2048).
+      - -m 128
+
+
+  # The backend Review Board server.
+  #
+  # This should not be accessed directly. Instead, please access the frontend
+  # nginx server.
+  reviewboard:
+    image: docker.io/beanbag/reviewboard:7.0
+    depends_on:
+      - reviewboard-db
+      - reviewboard-memcached
+#      - reviewboard-db
+#      - reviewboard-memcached
+
+#    ports:
+#      - "8080:8080"
+
+    environment:
+      - DATABASE_TYPE=postgresql
+      - DATABASE_SERVER=db
+      - UID=1000
+      - GID=1001
+#      - DATABASE_SERVER=reviewboard-db
+
+      # The name of your company.
+      #
+      # CHANGEME: You should use your actual name here. It's used for
+      #           internal state and your in-app support page.
+      - COMPANY=Memoria Works
+
+      # CHANGEME: Set this to the database username above.
+      - DATABASE_USERNAME=reviewboard
+
+      # CHANGEME: Set this to the database password above.
+      - DATABASE_PASSWORD=reviewboard123
+
+      # CHANGEME: Set this to your accessible domain name.
+      # - DOMAIN=intra.memoriaworks.com
+      - DOMAIN=reviewboard.memoriaworks.com
+
+    volumes:
+      - ../.volumes/reviewboard/reviewboard/site:/site
+
+
+  # # The frontend nginx web server.
+  # #
+  # # This serves up static media (CSS, JavaScript, and images), and forwards
+  # # all other requests to the Review Board backend server.
+  # #
+  # # This is the server you will access for Review Board.
+  # # Todo
+  # #  - [ ] We can probably use the nginx server that get
+  # #        already deployed.
+  # reviewboard-nginx:
+  #   image: docker.io/nginx:alpine
+  #   restart: always
+  #   depends_on:
+  #     - reviewboard
+
+  #   environment:
+  #     # CHANGEME: Set this to your accessible domain name above.
+  #     - NGINX_HOST=intra.memoriaworks.com
+
+  #     # The public port used to access this instance.
+  #     #
+  #     # If changed, you will need to change 'ports' below to match.
+  #     - NGINX_PORT=80
+
+  #   ports:
+  #     - "80:80"
+
+  #   volumes:
+  #     - ../.volumes/reviewboard/reviewboard/site:/var/www/reviewboard
+  #     - ./static/nginx:/etc/nginx/templates
+
+  #   # CHANGEME: If you are using /etc/hosts to define a domain name for
+  #   #           testing, set this to your domain name and uncomment.
+  #   #networks:
+  #   #  default:
+  #   #    aliases:
+  #   #      - reviewboard.example.com
+
+
+  # [Optional] The message broker for communication between Review Board and
+  #            certain services.
+  #
+  # RabbitMQ is recommended, but any Celery compatible message broker will
+  # work. This is an optional service that's only needed if you are using
+  # at least one of the following services:
+  #
+  # * Doc Converter, a document conversion service for Power Pack's Document
+  #   Review feature.
+  #
+  #   https://hub.docker.com/r/beanbag/docconverter
+  #
+  # A default user can be configured below for services. If you have multiple
+  # services that will connect to this message broker, you will likely need a
+  # separate user for each service. See your message broker's documentation
+  # for adding additional users.
+  reviewboard-rabbitmq:
+#  reviewboard-rabbitmq:
+    image: docker.io/rabbitmq:3-management
+    restart: always
+
+    # The hostname for the RabbitMQ container.
+    #
+    # This will be used in the broker URL.
+    hostname: rabbitmq
+    container_name: rabbitmq
+    environment:
+      # The RabbitMQ default virtual host.
+      #
+      # CHANGEME: Set this to an appropriate name for one service. In this
+      #           example, we'll set it for Doc Converter.
+      - RABBITMQ_DEFAULT_VHOST=docconverter-vhost
+#      - RABBITMQ_DEFAULT_VHOST=reviewboard-docconverter-vhost
+
+      # The RabbitMQ default user.
+      #
+      # CHANGEME: Set this to an appropriate name for one service. In this
+      #           example, we'll set it for Doc Converter.
+      - RABBITMQ_DEFAULT_USER=docconverter
+
+      # The RabbitMQ default user password to use for Doc Converter.
+      #
+      # CHANGEME: Set this to an appropriate password for one service. In
+      #           this example, we'll set it for Doc Converter.
+      #
+      #           Use a strong password!
+      - RABBITMQ_DEFAULT_PASS=pass123
+
+      # The RabbitMQ Erlang cookie to use for services.
+      #
+      # CHANGEME: Use a secret string of up to 255 alphanumeric characters.
+      - RABBITMQ_ERLANG_COOKIE=somecookie
+
+    ports:
+      # The port for connecting to the RabbitMQ service.
+      #
+      # This will be used in the broker URL.
+      - "5672:5672"
+
+      # The port for RabbitMQ's management plugin.
+      - "15672:15672"
+
+    healthcheck:
+      test: ['CMD', 'rabbitmqctl', 'status']
+      interval: 5s
+      timeout: 20s
+      retries: 5
+
+
+  # [Optional] Doc Converter, a document conversion service for Power Pack's
+  #            Document Review feature.
+  #
+  # This is needed if your server has Power Pack and will be using Document
+  # Review.
+  #
+  # You could also launch Doc Converter and/or a message broker separately.
+  # See the documentation for full details on the different ways Doc Converter
+  # can be set up:
+  #
+  # https://www.reviewboard.org/docs/powerpack/latest/features/doc-review/
+  reviewboard-docconverter:
+#  reviewboard-docconverter:
+    image: docker.io/beanbag/docconverter:latest
+    restart: always
+    hostname: docconverter
+    container_name: docconverter
+    depends_on:
+      reviewboard-rabbitmq:
+#      reviewboard-rabbitmq:
+        condition: service_healthy
+
+    environment:
+      # The broker URL for connecting to the message broker.
+      #
+      # CHANGEME: Change this according to your message broker hostname
+      #           and port above, and the configured user. The URL should be
+      #           in the following format:
+      #           amqp://[user]:[password]@[hostname]:[port]/[vhost]
+      - BROKER_URL=amqp://docconverter:pass123@rabbitmq:5672/docconverter-vhost
+#      - BROKER_URL=amqp://docconverter:pass123@reviewboard-rabbitmq:5672/reviewboard-docconverter-vhost

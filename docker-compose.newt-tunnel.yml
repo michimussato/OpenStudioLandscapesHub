@@ -51,6 +51,12 @@ include:
       - ./guacamole/docker-compose.yml
     env_file:
       - ./__SECRET__.env/guacamole.env
+  # ReviewBoard
+  - project_directory: ./reviewboard
+    path:
+      - ./reviewboard/docker-compose.yml
+    # env_file:
+    #   - ./__SECRET__.env/reviewboard.env
   # # Syncthing
   # - project_directory: ./syncthing
   #   path:

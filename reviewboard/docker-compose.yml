@@ -1,0 +1,9 @@
+# Use include to modularize Compose files
+# https://docs.docker.com/reference/compose-file/include/
+include:
+  - project_directory: .
+    path:
+      - ./docker-compose.nginx.yml
+  - project_directory: .
+    path:
+      - ./docker-compose.reviewboard.postgres.yml
