@@ -44,4 +44,4 @@ services:
       #  - [ ] replace settings.json with command flags
       # - ../.volumes/jellyfin/media:/media:rw
       - /srv/downloads:/shared
-      - ../.volumes/filebrowser/filebrowser_db:/database
+      - ../.volumes/filebrowser/database/filebrowser.db:/database/filebrowser.db
