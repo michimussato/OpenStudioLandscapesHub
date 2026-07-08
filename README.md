@@ -52,6 +52,16 @@ Services provided:
 - [Apache Guacamole (Multi-Arch)](guacamole/README.md)
 - [ntfy.sh](ntfy/README.md)
 
+Consider:
+- [Infisical](https://infisical.com/)
+- [Arcane](https://getarcane.app/)
+  - [The Best Docker Manager I’ve Seen! // Arcane Tutorial](https://www.youtube.com/watch?v=YwpWqdexEIk)
+  - [Docs](https://getarcane.app/docs)
+- [Caddy](https://caddyserver.com/)
+  - already deployed in the `memoriaworks` branch
+
+Maybe checkout this repo as `--bare`.
+
 ## Requirements
 
 - `docker` ([Setup Guide](https://docs.docker.com/engine/install/))
