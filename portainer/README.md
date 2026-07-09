@@ -50,6 +50,16 @@ Oct 24 23:45:48 lenovo dockerd[2394413]: time="2025-10-24T23:45:48.547722033+02:
 
 https://docs.docker.com/engine/security/protect-access/
 
+Breaking Change: Minimum API Version Raised to v1.44
+
+[Breaking Change: Minimum API Version Raised to v1.44](https://www.portainer.io/blog/technical-advisory-docker-swarm?utm_campaign=40072045-Docker%20Swarm%20Campaign&utm_source=MOTD&utm_medium=CVE%20and%20Swarm%20MOTD#breaking-change-minimum-api-version-raised-to-v144)
+> Docker v29 raised the minimum supported daemon API version to 1.44, 
+> dropping all compatibility with clients built against Docker Engine 
+> older than v25. Any tooling, plugin, or management platform compiled 
+> against an older API version receives a hard rejection. There is 
+> no fallback or negotiation. This single change broke a large portion 
+> of the Docker ecosystem.
+
 ## Add Environment via Docker API URL
 
 1. Environment-related/Environments

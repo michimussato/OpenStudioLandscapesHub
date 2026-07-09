@@ -3,6 +3,8 @@
 #
 # Run with
 # PANGOLIN_ENDPOINT= NEWT_ID= NEWT_SECRET= docker compose --file docker-compose.yml --project-name openstudiolandscapes-hub up --remove-orphans --detach
+# With --pull always
+# PANGOLIN_ENDPOINT= NEWT_ID= NEWT_SECRET= docker compose --file docker-compose.yml --project-name openstudiolandscapes-hub up --pull always --remove-orphans --detach
 #
 # Log with
 # docker compose --file docker-compose.yml --project-name openstudiolandscapes-hub log --follow
@@ -43,23 +45,24 @@ include:
       - ./registry/docker-compose.ntfy.yml
 
 
-services:
-  newt:
-    image: fosrl/newt
-    container_name: newt
-    restart: unless-stopped
-    environment:
-      - PANGOLIN_ENDPOINT=${PANGOLIN_ENDPOINT}
-      - NEWT_ID=${NEWT_ID}
-      - NEWT_SECRET=${NEWT_SECRET}
-      - ACCEPT_CLIENTS=${ACCEPT_CLIENTS:-false}
-    #############################################
-    # Leave this intact
-      - DOCKER_SOCKET=/var/run/docker.sock
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    #############################################
+#services:
+#  newt:
+#    image: fosrl/newt
+#    container_name: newt
+#    restart: unless-stopped
+#    environment:
+#      - PANGOLIN_ENDPOINT=${PANGOLIN_ENDPOINT}
+#      - NEWT_ID=${NEWT_ID}
+#      - NEWT_SECRET=${NEWT_SECRET}
+#      - ACCEPT_CLIENTS=${ACCEPT_CLIENTS:-false}
+#    #############################################
+#    # Leave this intact
+#      - DOCKER_SOCKET=/var/run/docker.sock
+#    volumes:
+#      - /var/run/docker.sock:/var/run/docker.sock
+#    #############################################
 
 networks:
   default:
-    name: pangolin_default
+    driver: bridge
+    name: pangolin

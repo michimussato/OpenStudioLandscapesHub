@@ -24,7 +24,7 @@ log:
 #    acme:
 #      httpChallenge:
 #        entryPoint: web
-#      email: <YOUR_EMAIL> # REPLACE WITH YOUR EMAIL
+#      email: francescofaranna@gmail.com # REPLACE WITH YOUR EMAIL
 #      storage: "/letsencrypt/acme.json"
 #      caServer: "https://acme-v02.api.letsencrypt.org/directory"
 
@@ -32,49 +32,17 @@ log:
 certificatesResolvers:
 # Uncomment the resolvers that apply to your DNS Provider
 #  # https://doc.traefik.io/traefik/reference/install-configuration/tls/certificate-resolvers/acme/
-#  #
-#  # ClouDNS
-#  # https://go-acme.github.io/lego/dns/cloudns/index.html
-#  cloudns_staging:
-#    acme:
-#      email: <YOUR_EMAIL>  # <-- Change this to your email
-#      storage: /letsencrypt/acme.cloudns_staging.json
-#      caServer: "https://acme-staging-v02.api.letsencrypt.org/directory"
-#      dnsChallenge:
-#        provider: cloudns  # <-- (Optional) Change this to your DNS provider
-#        resolvers:
-#          - "8.8.4.4:53"
-#          - "8.8.8.8:53"
-#  cloudns_production:
-#    acme:
-#      email: <YOUR_EMAIL>  # <-- Change this to your email
-#      storage: /letsencrypt/acme.cloudflare_production.json
-#      caServer: "https://acme-v02.api.letsencrypt.org/directory"
-#      dnsChallenge:
-#        provider: cloudns  # <-- (Optional) Change this to your DNS provider
-#        resolvers:
-#          - "8.8.4.4:53"
-#          - "8.8.8.8:53"
 #  # Cloudflare
 #  # https://go-acme.github.io/lego/dns/cloudflare/index.html
-#  cloudflare_staging:
-#    acme:
-#      email: <YOUR_EMAIL>  # <-- Change this to your email
-#      storage: /letsencrypt/acme.cloudflare_staging.json
-#      caServer: "https://acme-staging-v02.api.letsencrypt.org/directory"
-#      dnsChallenge:
-#        provider: cloudflare  # <-- (Optional) Change this to your DNS provider
-#        resolvers:
-#          - "1.1.1.1:53"
-#  cloudflare_production:
-#    acme:
-#      email: <YOUR_EMAIL>  # <-- Change this to your email
-#      storage: /letsencrypt/acme.cloudflare_production.json
-#      caServer: "https://acme-v02.api.letsencrypt.org/directory"
-#      dnsChallenge:
-#        provider: cloudflare  # <-- (Optional) Change this to your DNS provider
-#        resolvers:
-#          - "1.1.1.1:53"
+  cloudflare_production:
+    acme:
+      email: francescofaranna@gmail.com  # <-- Change this to your email
+      storage: /letsencrypt/acme.cloudflare_production.json
+      caServer: "https://acme-v02.api.letsencrypt.org/directory"
+      dnsChallenge:
+        provider: cloudflare  # <-- (Optional) Change this to your DNS provider
+        resolvers:
+          - "1.1.1.1:53"
 
 entryPoints:
   web:
@@ -86,7 +54,7 @@ entryPoints:
         readTimeout: "30m"
     http:
       tls:
-        certResolver: "<RESOLVER>"  # <-- i.e. "cloudflare_production"
+        certResolver: "cloudflare_production"  # <-- i.e. "cloudflare_production"
 
 serversTransport:
   insecureSkipVerify: true

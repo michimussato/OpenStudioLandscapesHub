@@ -6,12 +6,17 @@ services:
     # changes in shm_size
     # requires down -> up
     shm_size: 1gb
-    cap_add: []
+    cap_add:
+     - NET_ADMIN
+     - CAP_SYS_NICE
+     - CAP_SYS_TIME
     container_name: pihole-unbound
     env_file:
       - ../.env/pihole.env
-    hostname: pihole-unbound
+    hostname: pihole-faranna-lan
     image: docker.io/mpgirro/pihole-unbound:latest
+#    network_mode: host
+#    mac_address: 1234deb06b61,  # Random, unique mac address
 #    labels:
 #      # Todo
 #      #  - [ ] automatically redirect to /admin
@@ -23,14 +28,14 @@ services:
 #      - pangolin.proxy-resources.pihole.targets[0].method=http
 #      - pangolin.proxy-resources.pihole.targets[0].hostname=pihole
 #      - pangolin.proxy-resources.pihole.targets[0].port=80
-    depends_on:
-      newt:
-        condition: service_started
+#    depends_on:
+#      newt:
+#        condition: service_started
     ports:
     - "53:53/tcp"
     - "53:53/udp"
     - "88:80/tcp"  # <-- Leave this one exposed so that we *could* reach this Web UI by <IP>:<PORT>
-    restart: unless-stopped
+    restart: always
     volumes:
     - ../.volumes/data/pi-hole/etc/pihole:/etc/pihole:rw
     - ../.volumes/data/pi-hole/etc/dnsmasq.d:/etc/dnsmasq.d:rw

@@ -1,19 +1,19 @@
 app:
-  dashboard_url: "https://pangolin.<YOUR_DOMAIN>"
+  dashboard_url: "https://pangolin.faranna.de"
   # https://docs.pangolin.net/self-host/telemetry#configuration
   telemetry:
     anonymous_usage: false  # Set to false to disable
 
 domains:
   domain1:
-    base_domain: "pangolin.<YOUR_DOMAIN>"
-    cert_resolver: "letsencrypt"
+    base_domain: "pangolin.faranna.de"
+    cert_resolver: "cloudflare_production"
 
 server:
   secret: "my-strong-secret"
 
 gerbil:
-  base_endpoint: "pangolin.<YOUR_DOMAIN>"
+  base_endpoint: "pangolin.faranna.de"
 
 flags:
   require_email_verification: false
