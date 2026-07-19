@@ -1,0 +1,24 @@
+{
+    auto_https off  # Pangolin takes care of SSL encryption
+    debug
+}
+
+:80 {
+
+    root * /html/www.example.com
+
+    file_server {
+        browse
+    }
+
+}
+
+:81 {
+
+    root * /html/intra.example.com
+
+    file_server {
+        browse
+    }
+
+}

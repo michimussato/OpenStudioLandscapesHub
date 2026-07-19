@@ -1,0 +1,84 @@
+# Use include to modularize Compose files
+# https://docs.docker.com/reference/compose-file/include/
+#
+# Run with
+# PANGOLIN_ENDPOINT= NEWT_ID= NEWT_SECRET= docker compose --file docker-compose.yml --project-name openstudiolandscapes-hub up --remove-orphans --detach
+#
+# Log with
+# docker compose --file docker-compose.yml --project-name openstudiolandscapes-hub log --follow
+#
+# Down with
+# docker compose --file docker-compose.yml --project-name openstudiolandscapes-hub down
+
+include:
+
+  - # Caddy
+    project_directory: caddy
+    path:
+      - ./caddy/docker-compose.caddy.yml
+    env_file:
+      - ./.env/template.caddy.env
+
+  - # Supported Linux OS: amd64, arm64, ppc64el
+    project_directory: ./guacamole
+    path:
+      - ./guacamole/docker-compose.guacamole.yml
+    env_file:
+      - ./.env/template.guacamole.env
+
+  - # Registry
+    project_directory: ./ntfy
+    path:
+      - ./registry/docker-compose.ntfy.yml
+    env_file:
+      - ./.env/template.ntfy.env
+
+  - # Pangolin
+    project_directory: ./pangolin
+    path:
+      - ./pangolin/docker-compose.pangolin.yml
+    env_file:
+      - ./.env/template.pangolin.env
+
+  - # Pihole
+    project_directory: ./pihole
+    path:
+      - ./pihole/docker-compose.pi-hole.yml
+    env_file:
+      - ./.env/template.pihole.env
+
+  - # Portainer
+    project_directory: ./portainer
+    path:
+      - ./portainer/docker-compose.portainer.yml
+    env_file:
+      - ./.env/template.portainer.env
+
+  - # Registry
+    project_directory: ./registry
+    path:
+      - ./registry/docker-compose.registry.yml
+    env_file:
+      - ./.env/template.registry.env
+
+
+# services:
+#   newt:
+#     image: fosrl/newt
+#     container_name: newt
+#     restart: unless-stopped
+#     environment:
+#       - PANGOLIN_ENDPOINT=${PANGOLIN_ENDPOINT}
+#       - NEWT_ID=${NEWT_ID}
+#       - NEWT_SECRET=${NEWT_SECRET}
+#       - ACCEPT_CLIENTS=${ACCEPT_CLIENTS:-false}
+#     #############################################
+#     # Leave this intact
+#       - DOCKER_SOCKET=/var/run/docker.sock
+#     volumes:
+#       - /var/run/docker.sock:/var/run/docker.sock
+#     #############################################
+#
+# networks:
+#   default:
+#     name: pangolin_default

@@ -1,0 +1,18 @@
+services:
+  caddy:
+    image: docker.io/caddy:2.8.4
+    container_name: caddy
+    # Important for the Pangolin Resource!
+    hostname: caddy
+    restart: unless-stopped
+    # depends_on:
+    #   - newt
+    # ports:
+    #   - "88:80"
+    #   - "89:81"
+    # #  - "443:443"
+    volumes:
+      - ./static/etc/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./static/html:/html:ro
+      - ../.volumes/caddy/data:/data:rw
+      - ../.volumes/caddy/config:/config:rw
