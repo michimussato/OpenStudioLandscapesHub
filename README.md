@@ -94,28 +94,61 @@ flowchart TB
     subgraph "LAN"
         direction TB
         router(("`Router/Firewall`"))
-        subgraph "OpenStudioLandscapesHub Host" 
+        subgraph sg_host[OpenStudioLandscapesHub Host]
 
-            subgraph "docker-compose.yml" 
+            subgraph sg_compose[docker-compose.yml]
                 direction TB
                 
                 subgraph "Exposed Ports"
                     direction TB
-                    port_53(("53"))
+                    %%port_53(("53"))
                     port_80(("80"))
                     port_443(("443"))
-                    port_5000(("5000"))
+                    %%%port_5000(("5000"))
+                    port_21820(("21820"))
+                    port_51820(("51820"))
                 end
                 
                 subgraph "Docker Compose Network" 
                     direction TB
-                    pangolin["`Pangolin`"]
-                    guacamole["`Guacamole`"]
-                    pihole["`Pihole (DNS)`"]
-                    portainer["`Portainer`"]
-                    registry["`Registry`"]
-                    registry-ui["`Registry UI`"]
-                    ntfy["`ntfy.sh`"]
+                    
+                    subgraph sg_pangolin[Pangolin]
+                        direction TB
+                        
+                        %%subgraph Traefik 
+                        %%    domain["`example.com`"]
+                        %%    www_domain["`www.example.com`"]
+                        %%    pangolin_domain["`pangolin.example.com`"]
+                        %%    guacamole_domain["`guacamole.example.com`"]
+                        %%    pihole_domain["`pihole.example.com`"]
+                        %%    portainer_domain["`portainer.example.com`"]
+                        %%    ntfy_domain["`ntfy.example.com`"]
+                        %%end
+                        %%traefik["`Traefik`"]
+                        %%port_53(("53"))
+                        pangolin_port_80(("80"))
+                        pangolin_port_443(("443"))
+                        %%%port_5000(("5000"))
+                        pangolin_port_21820(("21820"))
+                        pangolin_port_51820(("51820"))
+                        pangolin["`Pangolin`"]
+                        %%gerbil["`Gerbil`"]
+                    end
+                    
+                    subgraph sg_protected
+                        direction TB
+                        guacamole["`Guacamole`"]
+                        pihole["`Pihole (DNS)`"]
+                        portainer["`Portainer`"]
+                        registry["`Registry`"]
+                        registry-ui["`Registry UI`"]
+                        ntfy["`ntfy.sh`"]
+                    end
+                    
+                    subgraph sg_unprotected 
+                        direction TB
+                        caddy["`Caddy (Web Server)`"]
+                    end
                 end
                 
             end
@@ -123,22 +156,92 @@ flowchart TB
         end
     end
     
-    wan -- example.com --> router
-    router -- 53 --> port_53
-    router -- 80 --> port_80
-    router -- 443 --> port_443
-    router -- 5000 --> port_5000
-    port_53 o-- 53 --o pihole
-    port_80 o-- 80 --o pangolin
-    port_443 o-- 443 --o pangolin
-    pangolin ----> guacamole
-    pangolin ----> portainer
-    pangolin ----> registry-ui
-    pangolin ----> pihole
-    pangolin ----> ntfy
-    registry-ui --> registry
-    port_5000 o-- 5000 --o registry
-    portainer o---o docker_sock
+    wan ---> router
+    
+    port_80 ---> pangolin_port_80
+    pangolin_port_80 ---> pangolin_port_443
+    port_443 ---> pangolin_port_443
+    port_21820 ---> pangolin_port_21820
+    port_51820 ---> pangolin_port_51820
+    %%port_80 -------> pangolin
+    %%port_443 -------> www_domain
+    %%port_443 -------> guacamole_domain
+    %%port_443 -------> portainer_domain
+    %%port_443 -------> ntfy_domain
+    %%port_443 -------> pihole_domain
+    %%domain ---> www_domain
+    %%pangolin -------> www_domain
+    %%port_443 -------> pangolin_domain
+    %%pangolin -------> caddy
+    %%pangolin ------> pangolin_domain
+    %%pangolin ------> guacamole_domain
+    %%pangolin ------> portainer_domain
+    %%pangolin ------> ntfy_domain
+    %%pangolin ------> pihole_domain
+    
+    %%port_21820 ---> pangolin
+    %%port_51820 ---> pangolin
+    
+    router ---> port_80
+    router ---> port_443
+    router ---> port_21820
+    router ---> port_51820
+    
+    %%port_80 --> port_443
+    
+    pangolin_port_443 --> pangolin
+    pangolin_port_21820 --> pangolin
+    pangolin_port_51820 --> pangolin
+    
+    pangolin -- guacamole.example.com -----> guacamole
+    %%port_80 ---> port_443
+    %%pangolin ------> port_443
+    pangolin -- pihole.example.com -----> pihole
+    pangolin -- portainer.example.com -----> portainer
+    pangolin -- registry.example.com -----> registry
+    pangolin -- registry-ui.example.com -----> registry-ui
+    pangolin -- ntfy.example.com -----> ntfy
+    pangolin -- example.com -----> caddy
+    pangolin -- www.example.com -----> caddy
+    
+    %%port_443 --> example_com_internal
+    %%port_443 --> www_example_com_internal
+    %%example_com_internal --> www_example_com_internal
+    
+    %%pangolin --> www
+    %%www --> caddy
+    %%pangolin 
+    
+    %%wan -- example.com --> router
+    %%pangolin -- example.com ----> caddy
+    %%%%router -- 53 --> port_53
+    %%router -- 80 --> port_80
+    %%router -- 443 --> port_443
+    %%%%router -- 5000 --> port_5000
+    %%router -- 21820 --> port_21820
+    %%router -- 51820 --> port_51820
+    %%port_53 o-- 53 --o pihole
+    %%port_80 o-- 80 --o pangolin
+    %%port_443 o-- 443 --o pangolin
+    %%port_21820 o-- 21820 --o pangolin
+    %%port_51820 o-- 51820 --o pangolin
+    %%pangolin ----> guacamole
+    %%pangolin ----> portainer
+    %%pangolin ----> registry-ui
+    %%pangolin ----> pihole
+    %%pangolin ----> ntfy
+    %%registry-ui --> registry
+    %%port_5000 o-- 5000 --o registry
+    %%portainer o---o docker_sock
+    
+    classDef blue fill:#4285f4,color:#fff,stroke:#333;
+    classDef red fill:#db4437,color:#fff,stroke:#333;
+    classDef yellow fill:#f4b400,color:#fff,stroke:#333;
+    classDef green fill:#0f9d58,color:#fff,stroke:#333;
+    class sg_pangolin blue
+    class sg_compose green
+    %%class Network red
+    class sg_host yellow
 ```
 
 ## DNS
