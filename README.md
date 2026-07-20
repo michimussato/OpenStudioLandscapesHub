@@ -12,6 +12,11 @@
     * [Logs](#logs)
   * [DNS](#dns)
     * [Zone File Example for example.com](#zone-file-example-for-examplecom)
+  * [Hashing Passwords](#hashing-passwords)
+    * [`htpasswd`](#htpasswd)
+    * [Python](#python)
+    * [Docker](#docker)
+* [Todo](#todo)
 <!-- TOC -->
 
 ---
@@ -174,6 +179,17 @@ flowchart TB
     class sg_host yellow
 ```
 
+## Components
+
+- [Caddy]()
+- [filebrowser]()
+- [Guacamole]()
+- [ntfy.sh]()
+- [Pangolin]()
+- [Pihole]()
+- [Portainer]()
+- [Registry]()
+
 ## Requirements
 
 - `docker` ([Setup Guide](https://docs.docker.com/engine/install/))
@@ -227,3 +243,49 @@ $ORIGIN mydomain.com.
 @	3600	IN	A	<MY_PUBLIC_IP>
 *	3600	IN	CNAME	example.com.
 ```
+
+## Hashing Passwords
+
+> [!TIP]
+> 
+> This could be used to predefine passwords
+> for services like [Portainer](docker-compose/hub/.env/template.portainer.env) 
+> or [filebrowser](docker-compose/hub/.env/template.filebrowser.env).
+> 
+> Be aware that `$` characters have to be escaped with another `$`
+> character, like so: `$$`.
+
+References:
+- [How to Compute bcrypt Hash in Shell](https://www.baeldung.com/linux/bcrypt-hash)
+
+### `htpasswd`
+
+Three different ways to get a hash
+of `my_secret_password`.
+
+```shell
+htpasswd -bnBC 10 "" my_secret_password | cut -d : -f 2
+```
+
+### Python
+
+> [!TIP]
+> 
+> For reference, an OpenStudioLandscapes implementation is available here:
+> [filebrowser/config/models.py](https://github.com/michimussato/OpenStudioLandscapes-filebrowser/blob/main/src/OpenStudioLandscapes/filebrowser/config/models.py)
+
+```shell
+python3 -c "import bcrypt; print(bcrypt.hashpw(b'my_secret_password', bcrypt.gensalt()))"
+```
+
+### Docker
+
+```shell
+docker run --entrypoint htpasswd httpd:2 -bnBC 10 "" my_secret_password | cut -d : -f 2
+```
+
+---
+
+# Todo
+
+- [ ] Update `docker-compose/hub/.volumes/config/pangolin`

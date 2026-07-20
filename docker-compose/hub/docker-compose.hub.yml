@@ -17,49 +17,56 @@ include:
     path:
       - ./caddy/docker-compose.caddy.yml
     env_file:
-      - ./.env/template.caddy.env
+      - ./caddy/template.caddy.env
+
+  - # filebrowser
+    project_directory: filebrowser
+    path:
+      - ./filebrowser/docker-compose.filebrowser.yml
+    env_file:
+      - ./filebrowser/template.filebrowser.env
 
   - # Supported Linux OS: amd64, arm64, ppc64el
     project_directory: ./guacamole
     path:
       - ./guacamole/docker-compose.guacamole.yml
     env_file:
-      - ./.env/template.guacamole.env
+      - ./guacamole/template.guacamole.env
 
   - # Registry
     project_directory: ./ntfy
     path:
-      - ./registry/docker-compose.ntfy.yml
+      - ./ntfy/docker-compose.ntfy.yml
     env_file:
-      - ./.env/template.ntfy.env
+      - ./ntfy/template.ntfy.env
 
   - # Pangolin
     project_directory: ./pangolin
     path:
       - ./pangolin/docker-compose.pangolin.yml
     env_file:
-      - ./.env/template.pangolin.env
+      - ./pangolin/template.pangolin.env
 
   - # Pihole
     project_directory: ./pihole
     path:
       - ./pihole/docker-compose.pi-hole.yml
     env_file:
-      - ./.env/template.pihole.env
+      - ./pihole/template.pihole.env
 
   - # Portainer
     project_directory: ./portainer
     path:
       - ./portainer/docker-compose.portainer.yml
     env_file:
-      - ./.env/template.portainer.env
+      - ./portainer/template.portainer.env
 
   - # Registry
     project_directory: ./registry
     path:
       - ./registry/docker-compose.registry.yml
     env_file:
-      - ./.env/template.registry.env
+      - ./registry/template.registry.env
 
 
 # services:

@@ -1,0 +1,43 @@
+services:
+  filebrowser:
+    container_name: filebrowser
+    hostname: filebrowser
+    image: docker.io/filebrowser/filebrowser
+    depends_on:
+      newt:
+        condition: service_started
+#    labels:
+#      - pangolin.proxy-resources.filebrowser.name=filebrowser
+#      - pangolin.proxy-resources.filebrowser.full-domain=filebrowser.yourdomain.com
+#      - pangolin.proxy-resources.filebrowser.protocol=http
+#      - pangolin.proxy-resources.filebrowser.auth.sso-enabled=true
+#      - pangolin.proxy-resources.filebrowser.targets[0].method=http
+#      - pangolin.proxy-resources.filebrowser.targets[0].hostname=filebrowser
+#      - pangolin.proxy-resources.filebrowser.targets[0].port=80
+    command:
+      - --database
+      - /database/filebrowser.db
+      - --username
+      - ${DEFAULT_ADMIN_USER}
+      # How to hash a password:
+      # See https://github.com/michimussato/OpenStudioLandscapes-filebrowser/blob/fe20feaaff11a25dbed3387cfbe963b7f49427a7/src/OpenStudioLandscapes/filebrowser/config/models.py#L91
+      - --password
+      - ${DEFAULT_ADMIN_PASSWORD_HASHED}
+      - --root
+      - /shared
+      - --port
+      - '80'
+      - --baseURL
+      - ''
+      - --address
+      - ''
+      # - '127.0.0.1'
+      - --log
+      - stdout
+    # ports:
+    #   # 80 used by docker-compose.yml container
+    #   - "8181:80"
+    restart: unless-stopped
+    volumes:
+      - ../.volumes/filebrowser/shared:/shared:rw
+      - ../.volumes/filebrowser/database:/database
