@@ -3,23 +3,23 @@
 ---
 
 <!-- TOC -->
-* [OpenStudioLandscapesHub](#openstudiolandscapeshub)
+* [OpenStudioLandscapesHub Template](#openstudiolandscapeshub-template)
   * [Requirements](#requirements)
   * [Up](#up)
   * [Topology Concept](#topology-concept)
   * [DNS](#dns)
-    * [Zone File Example for mydomain.com](#zone-file-example-for-mydomaincom)
+    * [Zone File Example for example.com](#zone-file-example-for-examplecom)
 <!-- TOC -->
 
 ---
 
-# OpenStudioLandscapesHub
+# OpenStudioLandscapesHub Template
 
 > [!WARNING]
 > 
 > This is a work in progress concept. The provided setup
 > is functional but might need some manual configuration and tweaking.
-> This guide will improve over time. Once it's consiered finished,
+> This guide will improve over time. Once it's considered finished,
 > this warning will be removed.
 
 This is a basic Docker Compose setup to provide distributed teams (remote workers)
@@ -32,7 +32,7 @@ access to your resources created with [OpenStudioLandscapes](https://github.com/
 > on a single, isolated machine, embedding Landscapes into a 
 > network infrastructure is not generally needed. 
 
-As soon as multiple machines are involved (for example workers in a render farm or 
+As soon as multiplee machines are involved (for example workers in a render farm or 
 remote collaborators accessing your locally hosted OpenStudioLandscapes 
 resources), things can get complicated pretty quickly in case you
 don't have such a system set up already - like a local DNS server
@@ -44,23 +44,20 @@ of this Hub is [Pangolin](https://docs.pangolin.net/). It's open source and free
 locally).
 
 Services provided:
-- [Pangolin](pangolin/README.md)
-- [Pi-Hole (DNS)](pihole/README.md)
-- [Docker Registry](registry/README.md)
+- [Pangolin](./docker-compose/hub/pangolin/README.md)
+- [Pi-Hole (DNS)](./docker-compose/hub/pihole/README.md)
+- [Docker Registry](./docker-compose/hub/registry/README.md)
   - [With Registry UI](https://hub.docker.com/r/joxit/docker-registry-ui)
-- [Portainer](portainer/README.md)
-- [Apache Guacamole (Multi-Arch)](guacamole/README.md)
-- [ntfy.sh](ntfy/README.md)
+- [Portainer](./docker-compose/hub/portainer/README.md)
+- [Apache Guacamole (Multi-Arch)](./docker-compose/hub/guacamole/README.md)
+- [ntfy.sh](./docker-compose/hub/ntfy/README.md)
+- [Caddy](./docker-compose/hub/caddy/README.md)
 
 Consider:
 - [Infisical](https://infisical.com/)
 - [Arcane](https://getarcane.app/)
   - [The Best Docker Manager I’ve Seen! // Arcane Tutorial](https://www.youtube.com/watch?v=YwpWqdexEIk)
   - [Docs](https://getarcane.app/docs)
-- [Caddy](https://caddyserver.com/)
-  - already deployed in the `memoriaworks` branch
-
-Maybe checkout this repo as `--bare`.
 
 ## Requirements
 
@@ -71,7 +68,7 @@ Maybe checkout this repo as `--bare`.
 
 ```shell
 docker compose \
-    --file docker-compose.yml \
+    --file docker-compose/hub/docker-compose.hub.yml \
     --project-name openstudiolandscapes-hub \
     up \
     --remove-orphans \
@@ -88,9 +85,7 @@ config:
 ---
 flowchart TB
     wan(("`WAN`"))
-    %%newLines["`Line1
-    %%Line 2
-    %%Line 3`"]
+    
     subgraph "LAN"
         direction TB
         router(("`Router/Firewall`"))
@@ -101,10 +96,8 @@ flowchart TB
                 
                 subgraph "Exposed Ports"
                     direction TB
-                    %%port_53(("53"))
                     port_80(("80"))
                     port_443(("443"))
-                    %%%port_5000(("5000"))
                     port_21820(("21820"))
                     port_51820(("51820"))
                 end
@@ -114,41 +107,29 @@ flowchart TB
                     
                     subgraph sg_pangolin[Pangolin]
                         direction TB
-                        
-                        %%subgraph Traefik 
-                        %%    domain["`example.com`"]
-                        %%    www_domain["`www.example.com`"]
-                        %%    pangolin_domain["`pangolin.example.com`"]
-                        %%    guacamole_domain["`guacamole.example.com`"]
-                        %%    pihole_domain["`pihole.example.com`"]
-                        %%    portainer_domain["`portainer.example.com`"]
-                        %%    ntfy_domain["`ntfy.example.com`"]
-                        %%end
-                        %%traefik["`Traefik`"]
-                        %%port_53(("53"))
                         pangolin_port_80(("80"))
                         pangolin_port_443(("443"))
-                        %%%port_5000(("5000"))
                         pangolin_port_21820(("21820"))
                         pangolin_port_51820(("51820"))
                         pangolin["`Pangolin`"]
-                        %%gerbil["`Gerbil`"]
                     end
                     
-                    subgraph sg_protected
-                        direction TB
-                        guacamole["`Guacamole`"]
-                        pihole["`Pihole (DNS)`"]
-                        portainer["`Portainer`"]
-                        registry["`Registry`"]
-                        registry-ui["`Registry UI`"]
-                        ntfy["`ntfy.sh`"]
-                    end
+                    guacamole_example_com("`guacamole.example.com`")
+                    pihole_example_com("`pihole.example.com`")
+                    portainer_example_com("`portainer.example.com`")
+                    registry_example_com("`registry.example.com`")
+                    registry_ui_example_com("`registry-ui.example.com`")
+                    ntfy_example_com("`ntfy.example.com`")
+                    guacamole["`Guacamole`"]
+                    pihole["`Pihole (DNS)`"]
+                    portainer["`Portainer`"]
+                    registry["`Registry`"]
+                    registry-ui["`Registry UI`"]
+                    ntfy["`ntfy.sh`"]
                     
-                    subgraph sg_unprotected 
-                        direction TB
-                        caddy["`Caddy (Web Server)`"]
-                    end
+                    example_com("`example.com`")
+                    www_example_com("`www.example.com`")
+                    caddy["`Caddy (Web Server)`"]
                 end
                 
             end
@@ -163,76 +144,39 @@ flowchart TB
     port_443 ---> pangolin_port_443
     port_21820 ---> pangolin_port_21820
     port_51820 ---> pangolin_port_51820
-    %%port_80 -------> pangolin
-    %%port_443 -------> www_domain
-    %%port_443 -------> guacamole_domain
-    %%port_443 -------> portainer_domain
-    %%port_443 -------> ntfy_domain
-    %%port_443 -------> pihole_domain
-    %%domain ---> www_domain
-    %%pangolin -------> www_domain
-    %%port_443 -------> pangolin_domain
-    %%pangolin -------> caddy
-    %%pangolin ------> pangolin_domain
-    %%pangolin ------> guacamole_domain
-    %%pangolin ------> portainer_domain
-    %%pangolin ------> ntfy_domain
-    %%pangolin ------> pihole_domain
-    
-    %%port_21820 ---> pangolin
-    %%port_51820 ---> pangolin
     
     router ---> port_80
     router ---> port_443
     router ---> port_21820
     router ---> port_51820
     
-    %%port_80 --> port_443
-    
     pangolin_port_443 --> pangolin
     pangolin_port_21820 --> pangolin
     pangolin_port_51820 --> pangolin
     
-    pangolin -- guacamole.example.com -----> guacamole
-    %%port_80 ---> port_443
-    %%pangolin ------> port_443
-    pangolin -- pihole.example.com -----> pihole
-    pangolin -- portainer.example.com -----> portainer
-    pangolin -- registry.example.com -----> registry
-    pangolin -- registry-ui.example.com -----> registry-ui
-    pangolin -- ntfy.example.com -----> ntfy
-    pangolin -- example.com -----> caddy
-    pangolin -- www.example.com -----> caddy
+    pangolin -----> guacamole_example_com
+    guacamole_example_com ---> guacamole
     
-    %%port_443 --> example_com_internal
-    %%port_443 --> www_example_com_internal
-    %%example_com_internal --> www_example_com_internal
+    pangolin -----> pihole_example_com
+    pihole_example_com ---> pihole
     
-    %%pangolin --> www
-    %%www --> caddy
-    %%pangolin 
+    pangolin -----> portainer_example_com
+    portainer_example_com ---> portainer
     
-    %%wan -- example.com --> router
-    %%pangolin -- example.com ----> caddy
-    %%%%router -- 53 --> port_53
-    %%router -- 80 --> port_80
-    %%router -- 443 --> port_443
-    %%%%router -- 5000 --> port_5000
-    %%router -- 21820 --> port_21820
-    %%router -- 51820 --> port_51820
-    %%port_53 o-- 53 --o pihole
-    %%port_80 o-- 80 --o pangolin
-    %%port_443 o-- 443 --o pangolin
-    %%port_21820 o-- 21820 --o pangolin
-    %%port_51820 o-- 51820 --o pangolin
-    %%pangolin ----> guacamole
-    %%pangolin ----> portainer
-    %%pangolin ----> registry-ui
-    %%pangolin ----> pihole
-    %%pangolin ----> ntfy
-    %%registry-ui --> registry
-    %%port_5000 o-- 5000 --o registry
-    %%portainer o---o docker_sock
+    pangolin -----> registry_example_com
+    registry_example_com ---> registry
+    
+    pangolin -----> registry_ui_example_com
+    registry_ui_example_com ---> registry-ui
+    
+    pangolin -----> ntfy_example_com
+    ntfy_example_com ---> ntfy
+    
+    pangolin -----> example_com
+    pangolin -----> www_example_com
+    example_com --> www_example_com
+    www_example_com --> caddy
+    pangolin -----> caddy
     
     classDef blue fill:#4285f4,color:#fff,stroke:#333;
     classDef red fill:#db4437,color:#fff,stroke:#333;
@@ -240,15 +184,16 @@ flowchart TB
     classDef green fill:#0f9d58,color:#fff,stroke:#333;
     class sg_pangolin blue
     class sg_compose green
-    %%class Network red
     class sg_host yellow
 ```
 
 ## DNS
 
-DNS-01 Challenge needs API access.
+> [!IMPORTANT]
+> 
+> DNS-01 Challenge needs API access.
 
-### Zone File Example for mydomain.com
+### Zone File Example for example.com
 
 ```
 $ORIGIN mydomain.com.
@@ -256,6 +201,5 @@ $ORIGIN mydomain.com.
 @	3600	IN	NS	[ns1].
 @	3600	IN	NS	[ns2].
 @	3600	IN	A	<MY_PUBLIC_IP>
-pangolin	3600	IN	CNAME	mydomain.com.
-*.pangolin	3600	IN	CNAME	pangolin.mydomain.com.
+*	3600	IN	CNAME	example.com.
 ```
