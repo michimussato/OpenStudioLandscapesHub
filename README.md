@@ -4,9 +4,12 @@
 
 <!-- TOC -->
 * [OpenStudioLandscapesHub Template](#openstudiolandscapeshub-template)
-  * [Requirements](#requirements)
-  * [Up](#up)
   * [Topology Concept](#topology-concept)
+  * [Requirements](#requirements)
+  * [Docker Compose](#docker-compose)
+    * [Up](#up)
+    * [Down](#down)
+    * [Logs](#logs)
   * [DNS](#dns)
     * [Zone File Example for example.com](#zone-file-example-for-examplecom)
 <!-- TOC -->
@@ -32,7 +35,7 @@ access to your resources created with [OpenStudioLandscapes](https://github.com/
 > on a single, isolated machine, embedding Landscapes into a 
 > network infrastructure is not generally needed. 
 
-As soon as multiplee machines are involved (for example workers in a render farm or 
+As soon as multiple machines are involved (for example workers in a render farm or 
 remote collaborators accessing your locally hosted OpenStudioLandscapes 
 resources), things can get complicated pretty quickly in case you
 don't have such a system set up already - like a local DNS server
@@ -58,22 +61,6 @@ Consider:
 - [Arcane](https://getarcane.app/)
   - [The Best Docker Manager I’ve Seen! // Arcane Tutorial](https://www.youtube.com/watch?v=YwpWqdexEIk)
   - [Docs](https://getarcane.app/docs)
-
-## Requirements
-
-- `docker` ([Setup Guide](https://docs.docker.com/engine/install/))
-- [Domain](#dns)
-
-## Up
-
-```shell
-docker compose \
-    --file docker-compose/hub/docker-compose.hub.yml \
-    --project-name openstudiolandscapes-hub \
-    up \
-    --remove-orphans \
-    --detach
-```
 
 ## Topology Concept
 
@@ -185,6 +172,43 @@ flowchart TB
     class sg_pangolin blue
     class sg_compose green
     class sg_host yellow
+```
+
+## Requirements
+
+- `docker` ([Setup Guide](https://docs.docker.com/engine/install/))
+- [Domain](#dns)
+
+## Docker Compose
+
+### Up
+
+```shell
+docker compose \
+    --file docker-compose/hub/docker-compose.hub.yml \
+    --project-name openstudiolandscapes-hub \
+    up \
+    --remove-orphans \
+    --detach
+```
+
+### Down
+
+```shell
+docker compose \
+    --file docker-compose/hub/docker-compose.hub.yml \
+    --project-name openstudiolandscapes-hub \
+    down
+```
+
+### Logs
+
+```shell
+docker compose \
+    --file docker-compose/hub/docker-compose.hub.yml \
+    --project-name openstudiolandscapes-hub \
+    logs \
+    --follow
 ```
 
 ## DNS
