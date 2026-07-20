@@ -5,6 +5,7 @@
 <!-- TOC -->
 * [OpenStudioLandscapesHub Template](#openstudiolandscapeshub-template)
   * [Topology Concept](#topology-concept)
+  * [Components](#components)
   * [Requirements](#requirements)
   * [Docker Compose](#docker-compose)
     * [Up](#up)
