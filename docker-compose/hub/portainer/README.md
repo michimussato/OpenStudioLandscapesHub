@@ -6,6 +6,9 @@
     * [Restart unit](#restart-unit)
   * [Protect API Access](#protect-api-access)
   * [Add Environment via Docker API URL](#add-environment-via-docker-api-url)
+* [Known Issues](#known-issues)
+  * [`Failed recreating container`](#failed-recreating-container)
+    * [Solution](#solution)
 <!-- TOC -->
 
 ---
@@ -61,3 +64,21 @@ https://docs.docker.com/engine/security/protect-access/
    - Docker API URL: `lenovo.farm.evil:2375`
 6. Connect
 7. Close
+
+---
+
+# Known Issues
+
+## `Failed recreating container`
+
+1. ![2026-07-24_08-50.png](../../../media/images/2026-07-24_08-50.png)
+2. ![2026-07-24_08-50_1.png](../../../media/images/2026-07-24_08-50_1.png)
+3. ![2026-07-24_08-51.png](../../../media/images/2026-07-24_08-51.png)
+
+### Solution
+
+Add local registry.
+
+1. ![2026-07-24_08-51_1.png](../../../media/images/2026-07-24_08-51_1.png)
+2. ![2026-07-24_08-53.png](../../../media/images/2026-07-24_08-53.png)
+3. ![2026-07-24_08-54.png](../../../media/images/2026-07-24_08-54.png)
